@@ -1,0 +1,7 @@
+{
+  "name": "pianomatic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
