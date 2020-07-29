@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
-//import { StorageService } from '../storage/storage.service';
 import { Observable, Subscription, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 
