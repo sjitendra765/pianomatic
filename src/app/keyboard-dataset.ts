@@ -1,7 +1,7 @@
-import {keyboard} from './piano-keyboard'
+import {Keyboard} from './piano-keyboard'
 
 
-export const KeyboardData: keyboard[] = [
+export const KeyboardData: Keyboard[] = [
     {
         id:1,
         name: "A0",

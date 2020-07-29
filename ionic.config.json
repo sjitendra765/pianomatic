@@ -1,7 +1,7 @@
 {
   "name": "pianomatic",
   "integrations": {
-    "capacitor": {}
+    "cordova": {}
   },
   "type": "angular"
 }
