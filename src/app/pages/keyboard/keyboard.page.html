@@ -1,7 +1,7 @@
 <ion-content>
   <div class = "links">
     <ul class="set">
-      <li *ngFor="let k of keyboardData; index as i" [ngClass]="'list '+ k.color" [style.height.px]="(k.color == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i != 0 && k.color == keyboardData[i-1].color )?0:-16"></li>     
+      <li *ngFor="let k of keyboardData; index as i" [ngClass]="'list '+ k.color" [style.height.px]="(k.color == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color == keyboardData[i-1].color )?0:-16" ></li>     
     </ul>
   </div>
 </ion-content>
