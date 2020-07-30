@@ -503,7 +503,7 @@ export const KeyboardData: Keyboard[] = [
     {
         id:84,
         name: "G7/A7",
-        color:"white",
+        color:"black",
         frequency: 3322.44
     },
     {
