@@ -5,13 +5,18 @@ const routes: Routes = [
   
   {
     path: 'bluetooth',
-    loadChildren: () => import('./bluetooth/bluetooth.module').then( m => m.BluetoothPageModule)
+    loadChildren: () => import('./pages/bluetooth/bluetooth.module').then( m => m.BluetoothPageModule)
   },
   {
     path: '',
-    redirectTo: 'bluetooth',
+    redirectTo: 'keyboard',
     pathMatch: 'full'
   },
+  {
+    path: 'keyboard',
+    loadChildren: () => import('./pages/keyboard/keyboard.module').then( m => m.KeyboardPageModule)
+  },
+
 ];
 
 @NgModule({

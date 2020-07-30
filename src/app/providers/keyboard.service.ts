@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import {KeyboardData} from './keyboard-dataset';
-import {Keyboard} from './piano-keyboard';
+import {KeyboardData} from '../static/keyboard-dataset';
+import {Keyboard} from '../models/piano-keyboard';
 
 @Injectable({
   providedIn: 'root'

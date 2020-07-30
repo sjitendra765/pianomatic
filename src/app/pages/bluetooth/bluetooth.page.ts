@@ -1,5 +1,5 @@
 
-import {BluetoothService} from '../bluetooth.service'
+import {BluetoothService} from '../../providers/bluetooth.service'
 import { Component, OnInit } from '@angular/core';
 
 @Component({

@@ -1,4 +1,4 @@
-import {Keyboard} from './piano-keyboard'
+import {Keyboard} from '../models/piano-keyboard'
 
 
 export const KeyboardData: Keyboard[] = [
