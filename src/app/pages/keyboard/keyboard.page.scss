@@ -19,8 +19,12 @@ body {
   }
   
   ul {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+    padding-top: 0px;
     height: 100%;
-    padding: 3em 0 0 3em;
+    width:100%;
     position: relative;
     border: 1px solid #160801;
     border-radius: 1em;
@@ -56,7 +60,7 @@ body {
   }
   
   .black {
-    height: 8em;
+    height: 10em;
     width: 2em;
     margin: 0 0 0 -1em;
     z-index: 2;
