@@ -1,7 +1,7 @@
 <ion-content>
   <div class = "links">
     <ul class="set">
-      <span *ngFor="let k of keyboardData"><li [ngClass]="'list '+ k.color"></li></span>     
+      <li *ngFor="let k of keyboardData" [ngClass]="'list '+ k.color"></li>     
     </ul>
   </div>
 </ion-content>
