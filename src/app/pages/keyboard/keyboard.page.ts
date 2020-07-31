@@ -45,7 +45,7 @@ export class KeyboardPage implements OnInit {
       this.renderer.appendChild(div, text);
       const cuEl = this.renderer.insertBefore(parent,div,child);
       const newEl = this.renderer.nextSibling(event.target )
-      this.renderer.addClass(newEl, 'dialogue');*/
+      this.renderer.addClass(newEl, 'dialogue');
     /*
      this.service.setRootViewContainerRef(this.viewContainerRef)
     this.service.addDynamicComponent()
