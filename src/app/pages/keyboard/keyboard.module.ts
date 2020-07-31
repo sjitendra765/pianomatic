@@ -7,7 +7,8 @@ import { IonicModule } from '@ionic/angular';
 import { KeyboardPageRoutingModule } from './keyboard-routing.module';
 
 import { KeyboardPage } from './keyboard.page';
-
+import {KeyDialogueComponent} from '../../components/key-dialogue/key-dialogue.component';
+import {Service} from "../../providers/dialogueBox.service"
 @NgModule({
   imports: [
     CommonModule,
@@ -15,6 +16,8 @@ import { KeyboardPage } from './keyboard.page';
     IonicModule,
     KeyboardPageRoutingModule
   ],
-  declarations: [KeyboardPage]
+  providers: [Service],
+  declarations: [KeyboardPage, KeyDialogueComponent],
+  entryComponents: [KeyDialogueComponent]
 })
 export class KeyboardPageModule {}
