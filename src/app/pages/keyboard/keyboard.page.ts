@@ -19,10 +19,11 @@ export class KeyboardPage implements OnInit {
   public HEIGHT: number
 
   @ViewChildren('dialogue', {read: ViewContainerRef}) public widgetTargets: QueryList<ViewContainerRef>;
-  
+
   viewContainerRef: any
   service: any;
   prevIdx: number;
+  prevKey: any;
   constructor(
     private screenOrientation: ScreenOrientation, platform:Platform, private renderer: Renderer2, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
@@ -42,15 +43,17 @@ export class KeyboardPage implements OnInit {
     async onPianoKeyPress(event,idx){ //on pianoKey press
       try{
         this.service.removeComponent()
+        this.renderer.removeClass(this.prevKey, this.keyboardData[this.prevIdx].color+'Active')
+        this.renderer.setAttribute(this.prevKey,'class',this.keyboardData[this.prevIdx].color)
       }
       catch(err){
         console.log(err)
       }
       this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
-      console.log(this.renderer.parentNode(this.renderer.selectRootElement('li')))
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()
       this.prevIdx = idx;
+      this.prevKey = event.target;
       //this.service.setRootViewContainerRef(this.viewContainerRef)
       //this.service.addDynamicComponent()
     
