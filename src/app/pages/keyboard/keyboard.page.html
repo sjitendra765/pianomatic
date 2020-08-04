@@ -1,9 +1,10 @@
 <ion-content>
   <div class = "links">      
     <ul class="set">
-      <li class="dialogue list"><ng-template #dialogue></ng-template></li>
-      <li *ngFor="let k of keyboardData; index as i" [ngClass]="'list '+ k.color" [style.height.px]="(k.color == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color == keyboardData[i-1].color )?0:-16" #list (click)="onKeyPress($event)" ></li>     
-      
+      <span *ngFor="let k of keyboardData; index as i">      
+      <li  [ngClass]="'list '+ k.color" [style.height.px]="(k.color == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color == keyboardData[i-1].color )?0:-16" #list (click)="onKeyPress($event)" >{{k.name}}</li>     
+      <li><ng-template #dialogue class="dialogue"></ng-template></li>
+    </span>
     </ul>    
   </div>
 </ion-content>
