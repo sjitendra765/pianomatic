@@ -23,4 +23,7 @@ import {
         .create(this.rootViewContainer.parentInjector)
       this.rootViewContainer.insert(component.hostView)
     }
+    removeComponent(idx){
+      this.rootViewContainer.remove(idx)
+    }
   }
