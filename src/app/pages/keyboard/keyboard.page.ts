@@ -49,6 +49,10 @@ export class KeyboardPage implements OnInit {
       catch(err){
         console.log(err)
       }
+      const parentSpan = this.renderer.parentNode(event.target)
+      const ul = this.renderer.parentNode(parentSpan)
+      this.renderer.setStyle(ul, 'width','3700px') //increase the width when dialogue box appear
+
       this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()
