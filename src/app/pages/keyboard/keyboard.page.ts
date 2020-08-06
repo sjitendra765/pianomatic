@@ -7,6 +7,7 @@ import {KeyboardData} from '../../static/keyboard-dataset';
 import {Keyboard} from '../../models/piano-keyboard';
 import { Platform } from '@ionic/angular';
 import {Service} from '../../providers/dialogueBox.service'
+import { createAnimation } from "@ionic/core";
 
 @Component({
   selector: 'app-keyboard',
@@ -24,6 +25,8 @@ export class KeyboardPage implements OnInit {
   service: any;
   prevIdx: number;
   prevKey: any;
+  progressInterval;
+  dialogueWidth: number;
   constructor(
     private screenOrientation: ScreenOrientation, platform:Platform, private renderer: Renderer2, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
@@ -41,25 +44,27 @@ export class KeyboardPage implements OnInit {
   }
     // set to landscape
     async onPianoKeyPress(event,idx){ //on pianoKey press
+      
       try{
         this.service.removeComponent()
         this.renderer.removeClass(this.prevKey, this.keyboardData[this.prevIdx].color+'Active')
         this.renderer.setAttribute(this.prevKey,'class',this.keyboardData[this.prevIdx].color)
+        this.renderer.removeClass(this.renderer.nextSibling(this.prevKey),'opened');
       }
       catch(err){
         console.log(err)
       }
       const parentSpan = this.renderer.parentNode(event.target)
       const ul = this.renderer.parentNode(parentSpan)
-      this.renderer.setStyle(ul, 'width','3700px') //increase the width when dialogue box appear
+      this.renderer.setStyle(ul, 'width','3630px') //increase the width when dialogue box appear
 
       this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()
+      this.renderer.addClass(this.renderer.selectRootElement('.dialogue'),'opened');
       this.prevIdx = idx;
       this.prevKey = event.target;
-      //this.service.setRootViewContainerRef(this.viewContainerRef)
-      //this.service.addDynamicComponent()
+      
     
     }
 

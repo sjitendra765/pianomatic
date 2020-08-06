@@ -9,7 +9,6 @@ import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
-
 import {BluetoothService} from './providers/bluetooth.service'
 
 @NgModule({
