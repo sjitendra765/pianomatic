@@ -72,8 +72,7 @@ export class KeyboardPage implements OnInit {
         }).fromTo('transform','scale(0.25)','scale(1)')
         //.iterations(Infinity)
       animation.play();
-      console.log(event)
-      console.log(ul)
+      //scroll button to the center
       ul.scrollTo(500, 0);
       this.prevIdx = idx;
       this.prevKey = event.target;    
