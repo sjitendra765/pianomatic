@@ -44,11 +44,24 @@ export class KeyboardPage implements OnInit {
   }
     // set to landscape
     async onPianoKeyPress(event,idx){ //on pianoKey press
-      
-      try{
-        this.service.removeComponent()
+      this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
+      try{        
         this.renderer.removeClass(this.prevKey, this.keyboardData[this.prevIdx].color+'Active')
         this.renderer.setAttribute(this.prevKey,'class',this.keyboardData[this.prevIdx].color)
+        var prevDialogue = this.renderer.nextSibling(this.prevKey)
+        let animation = createAnimation()
+        .addElement(prevDialogue)
+        .easing("ease-in-out")
+        .duration(1000)
+        .direction("alternate")
+        .fromTo('width', '300px', '0')
+        .afterStyles({
+          'background': 'green'
+        }).fromTo('transform','scale(1)','scale(0.25)')
+        //.iterations(Infinity)
+        await animation.play();
+        this.service.removeComponent()         
+        
       }
       catch(err){
         console.log(err)
@@ -57,11 +70,11 @@ export class KeyboardPage implements OnInit {
       const ul = this.renderer.parentNode(parentSpan)
       this.renderer.setStyle(ul, 'width','3650px') //increase the width when dialogue box appear
       const dialogue = this.renderer.nextSibling(event.target)
-      this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()
+      
       // creating animation to open the dialogue when key pressed
-      const animation = createAnimation()
+      let animation = createAnimation()
         .addElement(dialogue)
         .easing("ease-in-out")
         .duration(1000)
