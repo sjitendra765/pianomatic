@@ -72,6 +72,7 @@ export class KeyboardPage implements OnInit {
         }).fromTo('transform','scale(0.25)','scale(1)')
         //.iterations(Infinity)
       animation.play();
+      // scroll screen to the center
       dialogue.scrollIntoView({
         behavior: "smooth",
         block: "center"
