@@ -70,12 +70,9 @@ export class KeyboardPage implements OnInit {
         .fromTo('width', '0px', '300px')
         .afterStyles({
           'background': 'green'
-        })
-        
+        }).fromTo('transform','scale(0.25)','scale(1)')
         //.iterations(Infinity)
-  
-
-  animation.play();
+      animation.play();
       //this.renderer.addClass(this.renderer.selectRootElement('.dialogue'),'opened');
       this.prevIdx = idx;
       this.prevKey = event.target;
