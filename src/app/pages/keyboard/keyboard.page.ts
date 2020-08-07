@@ -55,7 +55,7 @@ export class KeyboardPage implements OnInit {
       }
       const parentSpan = this.renderer.parentNode(event.target)
       const ul = this.renderer.parentNode(parentSpan)
-      this.renderer.setStyle(ul, 'width','3630px') //increase the width when dialogue box appear
+      this.renderer.setStyle(ul, 'width','3650px') //increase the width when dialogue box appear
       const dialogue = this.renderer.nextSibling(event.target)
       this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
@@ -72,8 +72,10 @@ export class KeyboardPage implements OnInit {
         }).fromTo('transform','scale(0.25)','scale(1)')
         //.iterations(Infinity)
       animation.play();
-      //scroll button to the center
-      ul.scrollTo(500, 0);
+      dialogue.scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+      });
       this.prevIdx = idx;
       this.prevKey = event.target;    
     
