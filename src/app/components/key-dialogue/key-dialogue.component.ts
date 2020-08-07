@@ -11,8 +11,8 @@ export class KeyDialogueComponent implements OnInit  {
     console.log("test in constuctor")
   }
   ngOnInit(){  
-   /* const animation = createAnimation()
-    .addElement(document.querySelector(".test"))
+    const animation = createAnimation()
+    .addElement(document.querySelector(".dialogue"))
     .easing("ease-in-out")
     .duration(1000)
     .direction("alternate")
@@ -21,7 +21,7 @@ export class KeyDialogueComponent implements OnInit  {
     { offset: 0, transform: "scale(0.25)", opacity: "1" },
     { offset: 1, transform: "scale(1)", opacity: "0.5"}
   ]);
-  animation.play(); */
 
+  animation.play();
   }
 }

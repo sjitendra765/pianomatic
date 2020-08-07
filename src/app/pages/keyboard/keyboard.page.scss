@@ -13,31 +13,7 @@ body {
     max-width: 100%;
     overflow-x: scroll;
   }
-  .box {
-    width: 100px;
-  }
   
-  .transform {
-    -webkit-transition: all 2s ease;  
-    -moz-transition: all 2s ease;  
-    -o-transition: all 2s ease;  
-    -ms-transition: all 2s ease;  
-    transition: all 2s ease;
-  }
-  
-  .transform-active {
-    height: 200px;
-    width: 200px;
-  }
-  .dialogue{
-    width: 200px;
-    max-width: 300px;
-  animation: mymove 5s infinite;
-  }
-  @keyframes mymove {
-    from {transform: "scaleX(0.25)";}
-    to {transform: "scaleX(1.5)";}
-  }
   .set {
     width: 3330px;
     overflow-x: scroll;

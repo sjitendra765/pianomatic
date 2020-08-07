@@ -49,7 +49,7 @@ export class KeyboardPage implements OnInit {
         this.service.removeComponent()
         this.renderer.removeClass(this.prevKey, this.keyboardData[this.prevIdx].color+'Active')
         this.renderer.setAttribute(this.prevKey,'class',this.keyboardData[this.prevIdx].color)
-        this.renderer.removeClass(this.renderer.nextSibling(this.prevKey),'opened');
+       // this.renderer.removeClass(this.renderer.selectRootElement('.dialogue'),'opened');
       }
       catch(err){
         console.log(err)
@@ -57,11 +57,26 @@ export class KeyboardPage implements OnInit {
       const parentSpan = this.renderer.parentNode(event.target)
       const ul = this.renderer.parentNode(parentSpan)
       this.renderer.setStyle(ul, 'width','3630px') //increase the width when dialogue box appear
-
+      const next = this.renderer.nextSibling(event.target)
+     // this.renderer.addClass(next,"dialogue")
       this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()
-      this.renderer.addClass(this.renderer.selectRootElement('.dialogue'),'opened');
+      const animation = createAnimation()
+        .addElement(next)
+        .easing("ease-in-out")
+        .duration(1000)
+        .direction("alternate")
+        .fromTo('width', '0px', '300px')
+        .afterStyles({
+          'background': 'green'
+        })
+        
+        //.iterations(Infinity)
+  
+
+  animation.play();
+      //this.renderer.addClass(this.renderer.selectRootElement('.dialogue'),'opened');
       this.prevIdx = idx;
       this.prevKey = event.target;
       

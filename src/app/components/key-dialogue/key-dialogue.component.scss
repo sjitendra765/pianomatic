@@ -1,17 +1,7 @@
-
-  .dialogue{
-    z-index: 99999;
-    width: 10px;
-    display: block;
-    margin: auto;
-    background-color: yellow;
-  }
-  .opened{
-    animation: open-animate 1.2s ease;
-  }
-
-  @keyframes open-animate
-  {
-    0% { transform: scaleX(1)}
-    100% { transform: scaleX(300)}
-  }
+.dialogue{
+  z-index: 99999;
+  width: auto;
+  display: block;
+  margin: auto;
+  background-color: yellow;
+}
