@@ -68,7 +68,7 @@ export class KeyboardPage implements OnInit {
       }
       const parentSpan = this.renderer.parentNode(event.target)
       const ul = this.renderer.parentNode(parentSpan)
-      this.renderer.setStyle(ul, 'width','3650px') //increase the width when dialogue box appear
+      this.renderer.setStyle(ul, 'width','3630px') //increase the width when dialogue box appear
       const dialogue = this.renderer.nextSibling(event.target)
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()
