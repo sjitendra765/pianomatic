@@ -1,0 +1,4 @@
+{
+    "PROCEED": "Continuar",
+    "PERMISSION_MESSAGE": "Para que pianomatic funcione, necesita acceso al micrófono y Bluetooth desde su dispositivo. Pianomatic procederá ahora a solicitar esos permisos. Por favor acéptelos a ambos"
+}

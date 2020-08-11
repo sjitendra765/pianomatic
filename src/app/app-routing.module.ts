@@ -9,13 +9,18 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: 'keyboard',
+    redirectTo: 'device-permission',
     pathMatch: 'full'
   },
   {
     path: 'keyboard',
     loadChildren: () => import('./pages/keyboard/keyboard.module').then( m => m.KeyboardPageModule)
   },
+  {
+    path: 'device-permission',
+    loadChildren: () => import('./pages/device-permission/device-permission.module').then( m => m.DevicePermissionPageModule)
+  },
+
 
 ];
 

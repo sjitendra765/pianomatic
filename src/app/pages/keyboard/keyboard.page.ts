@@ -1,4 +1,4 @@
-import { Component, OnInit,Renderer2, ElementRef, ViewChild,Inject,
+import { Component, OnInit, ElementRef, ViewChild,Inject,
   ViewContainerRef,  
   QueryList,
   ViewChildren} from '@angular/core';
@@ -26,9 +26,11 @@ export class KeyboardPage implements OnInit {
   prevIdx: number;
   prevKey: any;
   progressInterval;
+  width = 3330
   dialogueWidth: number;
+  
   constructor(
-    private screenOrientation: ScreenOrientation, platform:Platform, private renderer: Renderer2, private el: ElementRef, @Inject(Service) service, 
+    private screenOrientation: ScreenOrientation, platform:Platform, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
      { 
       platform.ready().then(() => {
@@ -43,22 +45,14 @@ export class KeyboardPage implements OnInit {
     console.log(this.keyboardData[0].color)
   }
     // set to landscape
-    async onPianoKeyPress(event,idx){ //on pianoKey press
-      this.renderer.setAttribute(event.target,'class',this.keyboardData[idx].color+'Active') //remain keypress when key is clicked
-      try{        
-        this.renderer.removeClass(this.prevKey, this.keyboardData[this.prevIdx].color+'Active')
-        this.renderer.setAttribute(this.prevKey,'class',this.keyboardData[this.prevIdx].color)
-        var prevDialogue = this.renderer.nextSibling(this.prevKey)
-        let animation = createAnimation()
-        .addElement(prevDialogue)
-        .easing("ease-in-out")
-        .duration(1000)
-        .direction("alternate")
-        .fromTo('width', '300px', '0')
-        .afterStyles({
-          'background': 'green'
-        }).fromTo('transform','scale(1)','scale(0.25)')
-        //.iterations(Infinity)
+  async onPianoKeyPress(event,idx){ //on pianoKey press
+     this.keyboardData[idx].color = this.keyboardData[idx].color+'Active'
+     try{        
+        this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
+        var prevDialogue = this.prevKey.nextSibling
+        let animation = this.dialogueAnimation(prevDialogue, '300', '0', '1', '0.25', 'ease-in-out')
+
+        // creating reverse animation to closes the dialogue when key released
         await animation.play();
         this.service.removeComponent()         
         
@@ -66,24 +60,12 @@ export class KeyboardPage implements OnInit {
       catch(err){
         console.log(err)
       }
-      const parentSpan = this.renderer.parentNode(event.target)
-      const ul = this.renderer.parentNode(parentSpan)
-      this.renderer.setStyle(ul, 'width','3630px') //increase the width when dialogue box appear
-      const dialogue = this.renderer.nextSibling(event.target)
+      this.width = 3630
+      const dialogue = event.target.nextSibling
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
-      this.service.addDynamicComponent()
-      
+      this.service.addDynamicComponent()      
       // creating animation to open the dialogue when key pressed
-      let animation = createAnimation()
-        .addElement(dialogue)
-        .easing("ease-in-out")
-        .duration(1000)
-        .direction("alternate")
-        .fromTo('width', '0px', '300px')
-        .afterStyles({
-          'background': 'green'
-        }).fromTo('transform','scale(0.25)','scale(1)')
-        //.iterations(Infinity)
+      let animation = this.dialogueAnimation(dialogue, '0', '300', '0.25', '1', 'ease-in-out')
       animation.play();
       // scroll screen to the center
       dialogue.scrollIntoView({
@@ -93,6 +75,19 @@ export class KeyboardPage implements OnInit {
       this.prevIdx = idx;
       this.prevKey = event.target;    
     
-    }
+  }
+
+    // creating animation for dialogue box
+  dialogueAnimation(el,fromWidth, toWidth, fromScale, toScale, easing){
+        return createAnimation()
+        .addElement(el)
+        .easing(easing)
+        .duration(1000)
+        .direction("alternate")
+        .fromTo('width', fromWidth+'px', toWidth+'px')
+        .afterStyles({
+          'background': 'green'
+        }).fromTo('transform','scale('+fromScale+')','scale('+toScale+')')
+  }
 
 }
