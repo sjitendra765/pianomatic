@@ -36,6 +36,7 @@ export class DevicePermissionPage implements OnInit {
       if(!getMicrophoneAuth){
         await this.diagnostic.requestMicrophoneAuthorization()
       }
+      getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
       if(getBluetoothAuth && getMicrophoneAuth)
         this.route.navigate(['/keyboard'])
     }
