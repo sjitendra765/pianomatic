@@ -46,7 +46,6 @@ export class KeyboardPage implements OnInit {
     
   }
   ionViewWillEnter(){
-    console.log("ayo re")
     for(var i=0; i< this.keyboardData.length; i++){
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[i])
       this.service.addDynamicComponent() 
@@ -95,13 +94,14 @@ export class KeyboardPage implements OnInit {
     // creating animation for dialogue box
   dialogueAnimation(el,fromWidth, toWidth, easing, fromOpacity, toOpacity, display){
         return createAnimation()
-        .beforeStyles({ 'opacity': fromOpacity })
+        //.beforeStyles({ 'opacity': fromOpacity })
         .addElement(el)
         //.easing(easing)
         .duration(1000)
         //.direction("alternate")
         .fromTo('width', fromWidth+'px', toWidth+'px')
-        .afterStyles({ 'opacity': toOpacity })
+        .fromTo('opacity', fromOpacity, toOpacity)
+       // .afterStyles({ 'opacity': toOpacity })
         //.fromTo('transform','scale('+fromScale+')','scale('+toScale+')')
         /*.keyframes([
           { offset: 0, opacity: fromOpacity },

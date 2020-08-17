@@ -2,8 +2,8 @@
   <div class = "links">      
     <ul class="set" [style.width.px] = "width">
       <span *ngFor="let k of keyboardData; index as i">      
-      <li  [ngClass]="key+i +' list '+ k.color" [style.height.px]="(k.color.substring(0, 5) == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color.substring(0, 5) == keyboardData[i-1].color.substring(0, 5) )?0:-16" #list (click)="onPianoKeyPress($event,i)" ><br><br><br>{{k.name}}</li>     
-      <li class="box" [ngclass]="'box'+i" ><ng-template #dialogue ></ng-template></li>
+      <li  [ngClass]="'list '+ k.color" [style.height.px]="(k.color.substring(0, 5) == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color.substring(0, 5) == keyboardData[i-1].color.substring(0, 5) )?0:-16" #list (click)="onPianoKeyPress($event,i)" ><br><br><br>{{k.name}}</li>     
+      <li class="box"><ng-template #dialogue ></ng-template></li>
     </span>
     </ul>
     
