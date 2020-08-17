@@ -45,10 +45,12 @@ export class KeyboardPage implements OnInit {
     console.log(this.keyboardData[0].color)
     
   }
-  ionViewWillEnter(){
+  async ionViewWillEnter(){
     for(var i=0; i< this.keyboardData.length; i++){
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[i])
-      this.service.addDynamicComponent() 
+      await this.service.addDynamicComponent(this.keyboardData[i].frequency, this.keyboardData[i].name) 
+      //console.log(this.keyboardData[i].frequency)
+      //this.service.updateComponent(this.keyboardData[i].frequency)
     }
   }
     // set to landscape

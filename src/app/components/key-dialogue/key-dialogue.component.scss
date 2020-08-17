@@ -4,5 +4,31 @@
  // height: 500px;
   display: block;
   margin: auto;
-  background-color: yellow;
+  background-color: rgb(12, 88, 5);
+}
+ion-icon{
+  font-size: 50px;
+  color: red;
+  &:active {
+   // box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, (-5px) 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
+    color: rgb(151, 79, 79)
+  }
+}
+ion-img{
+  margin-left: 100px;
+  height: auto;
+  width: 100px;
+}
+p{
+  margin: 8px;
+  font-size: 32px;
+}
+h3{
+  margin:0;
+  padding: 14px;
+}
+div{
+  margin: 0;
+  padding:0;
+  text-align: center;
 }
