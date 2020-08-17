@@ -2,7 +2,17 @@ body {
     margin: 0;
     background: #222;
   }
-
+  ion-icons{
+    height:50px;
+    width: 50px;
+  }
+  .mainmenu{
+    position: fixed;
+    z-index: 9999;
+    bottom: 0;
+    height: 50px;
+    color: green;
+  }
   .menu{
     position: fixed;
     z-index: 9999;
@@ -13,7 +23,9 @@ body {
     max-width: 100%;
     overflow-x: scroll;
   }
-  
+  .box{
+    display: none;
+  }
   .set {
     width: 3330px;
     overflow-x: scroll;

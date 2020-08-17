@@ -43,6 +43,14 @@ export class KeyboardPage implements OnInit {
      }
   ngOnInit() {
     console.log(this.keyboardData[0].color)
+    
+  }
+  ionViewWillEnter(){
+    console.log("ayo re")
+    for(var i=0; i< this.keyboardData.length; i++){
+      this.service.setRootViewContainerRef(this.widgetTargets.toArray()[i])
+      this.service.addDynamicComponent() 
+    }
   }
     // set to landscape
   async onPianoKeyPress(event,idx){ //on pianoKey press
@@ -50,11 +58,16 @@ export class KeyboardPage implements OnInit {
      try{        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
         var prevDialogue = this.prevKey.nextSibling
-        let animation = this.dialogueAnimation(prevDialogue, '300', '0', '1', '0.25', 'ease-in-out')
-
+        let animation = this.dialogueAnimation(prevDialogue, 300, 0, 'ease-out',0,0, "none")
         // creating reverse animation to closes the dialogue when key released
-        await animation.play();
-        this.service.removeComponent()         
+        animation.play();
+       /* this.service.removeComponent() */
+        if(idx == this.prevIdx)
+        {
+          this.prevIdx = undefined
+          this.width = 3330
+          return
+        }
         
       }
       catch(err){
@@ -62,15 +75,17 @@ export class KeyboardPage implements OnInit {
       }
       this.width = 3630
       const dialogue = event.target.nextSibling
-      this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
-      this.service.addDynamicComponent()      
+     /* this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
+      this.service.addDynamicComponent()*/      
       // creating animation to open the dialogue when key pressed
-      let animation = this.dialogueAnimation(dialogue, '0', '300', '0.25', '1', 'ease-in-out')
+     
+      let animation = this.dialogueAnimation(dialogue, 0, 300, 'ease-in', 0,1, 'block')
       animation.play();
+      dialogue.style.display = 'block';
       // scroll screen to the center
       dialogue.scrollIntoView({
         behavior: "smooth",
-        block: "center"
+        inline: "center"
       });
       this.prevIdx = idx;
       this.prevKey = event.target;    
@@ -78,16 +93,20 @@ export class KeyboardPage implements OnInit {
   }
 
     // creating animation for dialogue box
-  dialogueAnimation(el,fromWidth, toWidth, fromScale, toScale, easing){
+  dialogueAnimation(el,fromWidth, toWidth, easing, fromOpacity, toOpacity, display){
         return createAnimation()
+        .beforeStyles({ 'opacity': fromOpacity })
         .addElement(el)
-        .easing(easing)
+        //.easing(easing)
         .duration(1000)
-        .direction("alternate")
+        //.direction("alternate")
         .fromTo('width', fromWidth+'px', toWidth+'px')
-        .afterStyles({
-          'background': 'green'
-        }).fromTo('transform','scale('+fromScale+')','scale('+toScale+')')
+        .afterStyles({ 'opacity': toOpacity })
+        //.fromTo('transform','scale('+fromScale+')','scale('+toScale+')')
+        /*.keyframes([
+          { offset: 0, opacity: fromOpacity },
+          {offset: 0.9, opacity: fromOpacity},
+          { offset: 1, opacity: toOpacity}])*/
   }
 
 }

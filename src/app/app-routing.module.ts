@@ -2,15 +2,14 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  
+  {
+    path: '',
+    redirectTo: 'keyboard',
+    pathMatch: 'full'
+  },
   {
     path: 'bluetooth',
     loadChildren: () => import('./pages/bluetooth/bluetooth.module').then( m => m.BluetoothPageModule)
-  },
-  {
-    path: '',
-    redirectTo: 'device-permission',
-    pathMatch: 'full'
   },
   {
     path: 'keyboard',
@@ -20,7 +19,6 @@ const routes: Routes = [
     path: 'device-permission',
     loadChildren: () => import('./pages/device-permission/device-permission.module').then( m => m.DevicePermissionPageModule)
   },
-
 
 ];
 
