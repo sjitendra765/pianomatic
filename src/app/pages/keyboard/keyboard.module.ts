@@ -9,12 +9,14 @@ import { KeyboardPageRoutingModule } from './keyboard-routing.module';
 import { KeyboardPage } from './keyboard.page';
 import {KeyDialogueComponent} from '../../components/key-dialogue/key-dialogue.component';
 import {Service} from "../../providers/dialogueBox.service"
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    KeyboardPageRoutingModule
+    KeyboardPageRoutingModule,
+    TranslateModule.forChild()
   ],
   providers: [Service],
   declarations: [KeyboardPage, KeyDialogueComponent],

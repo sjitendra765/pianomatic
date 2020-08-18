@@ -1,4 +1,5 @@
 import { Component, Input ,OnInit} from '@angular/core';
+import { TranslateService } from '@ngx-translate/core'
 
 @Component({
   selector: 'app-key-dialogue',
@@ -10,8 +11,9 @@ export class KeyDialogueComponent implements OnInit {
   @Input() name = "A0";
   threshold='';
   imgSrc = "../assets/freq.png";
-  constructor(){
-    
+
+  constructor(translate: TranslateService){
+    //translate.setDefaultLang('es');    
   }
   ngOnInit(){
     this.threshold = '+'+ (0.01* this.frequency).toFixed(2)

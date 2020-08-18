@@ -45,7 +45,8 @@ body {
     width:100%;
     border: 1px solid #160801;
     border-radius: 0;
-    background: linear-gradient(to bottom right, rgba(35, 90, 60, 0.603), rgba(0, 0, 0, 0)), url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
+    background-color: rgb(12, 88, 5);
+    //background: linear-gradient(to bottom right, rgba(35, 90, 60, 0.603), rgba(0, 0, 0, 0)), url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5) inset, 0 1px rgba(212, 152, 125, 0.2) inset, 0 5px 15px rgba(0, 0, 0, 0.5);
   }
   
