@@ -22,7 +22,7 @@ export class BluetoothPage implements OnInit {
   }
   ngOnInit() {
     this.showSpinner = true;
-      this.bluetooth.searchBluetooth().then((devices: Array<Object>) => {
+      this.bluetooth.search().then((devices: Array<Object>) => {
         this.listToggle = true
         this.devices = devices;
         this.showSpinner = false;
@@ -30,22 +30,25 @@ export class BluetoothPage implements OnInit {
         this.showSpinner = false;
       });
   }
-  selectDevice(){
-    this.address = "20:47:DA:DC:6E:FB"
-    this.bluetooth.deviceConnection(this.address).then((status: String) =>{
+  selectDevice(device){
+    this.address = device.address
+    console.log(device)
+    this.bluetooth.connect(this.address).then((status: String) =>{
       console.log("status", status)
     },(error)=>{
       console.log("error on connection",error)
     })
   }
   sendData(){
-    this.bluetooth.dataInOut(`${this.message}\n`).subscribe(data => {
+    this.bluetooth.sendMessage(1,7).then(data => {
       console.log(data)
-    })
+    }),(error)=>{
+      console.log("error sending data",error)
+    }
   }
   refreshBluetooth(refresher) {
     if (refresher) {
-      this.bluetooth.searchBluetooth().then((successMessage: Array<Object>) => {
+      this.bluetooth.search().then((successMessage: Array<Object>) => {
         this.devices = [];
         this.devices = successMessage;
         console.log("done" ,this.devices)

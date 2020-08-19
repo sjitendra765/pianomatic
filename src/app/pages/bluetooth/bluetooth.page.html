@@ -21,7 +21,7 @@
   </div>
 
   <ion-list lines="full" *ngIf="listToggle">
-    <ion-item button *ngFor="let device of devices">
+    <ion-item button (click)="selectDevice(device)" *ngFor="let device of devices">
       <ion-text>
         <h3>{{ "BLUETOOTH.NAME" }}: {{device.name}}</h3>
         <p>{{ "BLUETOOTH.ID"  }}: {{device.id}}</p>
@@ -33,8 +33,7 @@
       </ion-text>
     </ion-item>
   </ion-list>
-  <div><button ion-button full class="submit-button" *ngIf="listToggle" (click)="selectDevice()">
-    <ion-icon name="bluetooth"></ion-icon>&nbsp;Connect Bluetooth Devices</button></div>
+  <div>select device</div>
   <div>
     <button ion-button full class="submit-button" *ngIf="listToggle" (click)="sendData()">
       <ion-icon name="bluetooth"></ion-icon>&nbsp;SEND</button>

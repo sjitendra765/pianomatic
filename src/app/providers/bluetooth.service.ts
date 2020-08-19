@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BluetoothSerial } from '@ionic-native/bluetooth-serial/ngx';
 import { Observable, Subscription, from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { rejects } from 'assert';
 
 @Injectable()
 export class BluetoothService {
@@ -17,7 +18,7 @@ export class BluetoothService {
    * Search for available bluetooth devices.
    * @return {Promise<Object>} Returns a list of the devices that were found
    */
-  searchBluetooth(): Promise<Object> {
+  search(): Promise<Object> {
     return new Promise((resolve, reject) => {
       this.bluetoothSerial.isEnabled().then(success => {
         this.bluetoothSerial.discoverUnpaired().then(response => {
@@ -34,10 +35,19 @@ export class BluetoothService {
       });
     });
   }
+  getPermission(){
+    return new Promise((resolve, reject)=>{
+      this.bluetoothSerial.isEnabled().then(success =>{
+        resolve("Bluetooth has permission")
+      }).catch((error)=>{
+        reject("BLUETOOTH NOT ENABLED")
+      })
+    })
+  }
   /*
-  * check if device is connecter
+  * check if device is connected
   */
-  checkConnection() {
+  getStatus() {
     return new Promise((resolve, reject) => {
       this.bluetoothSerial.isConnected().then(isConnected => {
         resolve('BLUETOOTH.CONNECTED');
@@ -50,7 +60,7 @@ export class BluetoothService {
    * Bluetooth devices have its mac adrress,
    * it takes address input as a string and promise to returns string for its sucessfull connection or failure
    */
-  deviceConnection(address: string): Promise<string> {
+  connect(address: string): Promise<string> {
     return new Promise((resolve, reject) => {
       this.connection = this.bluetoothSerial.connect(address).subscribe(() => {
         resolve('BLUETOOTH.CONNECTED');
@@ -60,32 +70,45 @@ export class BluetoothService {
       });
     });
   }
-  disconnect(): Promise<boolean> {
+
+  getBattery(){
+    return new Promise((resolve, reject)=>{
+      this.bluetoothSerial.read().then(data=>{
+        resolve(data);
+      }).catch(error=>{
+        reject(error);
+      })
+    })
+  }
+
+  sendMessage(direction, revolution){
+    return new Promise((resolve, reject)=>{
+      this.bluetoothSerial.write([direction, revolution]).then(success=>{
+        resolve(success);
+      }).catch(error=>{
+        reject(error);
+      })
+    })
+  }
+
+  setPrecision( precision){
+    return new Promise((resolve, reject)=>{
+      this.bluetoothSerial.write(precision).then(success=>{
+        resolve(success);
+      }).catch(error=>{
+        reject(error);
+      })
+    })
+  }
+
+  stop(): Promise<boolean> {
     return new Promise((result) => {
-      if (this.connectionCommunication) {
-        this.connectionCommunication.unsubscribe();
-      }
-      if (this.connection) {
-        this.connection.unsubscribe();
+      if (this.bluetoothSerial.isConnected) {
+        this.bluetoothSerial.disconnect();
       }
       result(true);
     });
   }
-  dataInOut(message: string): Observable<any> {
-    return Observable.create(observer => {
-      this.bluetoothSerial.isConnected().then((isConnected) => {
-        this.reader = from(this.bluetoothSerial.write(message)).pipe(mergeMap(() => {
-            return this.bluetoothSerial.subscribeRawData();
-          })).pipe(mergeMap(() => {
-            return this.bluetoothSerial.readUntil('\n');   
-          }));
-        this.reader.subscribe(data => {
-          observer.next(data);
-        });
-      }, notConected => {
-        observer.next('BLUETOOTH.NOT_CONNECTED');
-        observer.complete();
-      });
-    });
-  }
+
+  
 }
