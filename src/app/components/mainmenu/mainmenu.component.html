@@ -1,4 +1,18 @@
 <div class="inmenu">
-  <div>Temperaments</div>
-  <button (click)="openTemperament()" class="arrowbut"><ion-icon name="arrow-forward"></ion-icon></button>
+  <div>
+  <h3 class="h3"><b>{{"CURRENT_TEMPERAMENT" | translate}}</b></h3>
+  </div>
+  <div>
+    <span>
+      <h3 class="standard h3">{{"STANDARD" | translate}}</h3>
+    </span>
+    <ion-icon (click)="openTemperament()" class="arrowbut" name="arrow-forward"></ion-icon>
+  </div>
+  <div class="savebox">
+    <h3 (click)="openInput()">{{"SAVE_CURRENT_TEMPERAMENT" | translate}}</h3>
+  </div>
+  <div *ngIf="show">
+    <input type="text" [(ngModel)] = 'name' />
+    <ion-button (click)="save()">{{"SAVE" | translate}}</ion-button>
+  </div>
 </div>

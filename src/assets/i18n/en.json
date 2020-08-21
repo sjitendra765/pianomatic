@@ -1,5 +1,12 @@
 {
     "PROCEED": "proceed",
     "PERMISSION_MESSAGE": "In order for pianomatic to work, it needs access to the microphone and Bluetooth from your device. Pianomatic will now proceed to ask for those permissions. Please accept them both",
-    "TUNING_KEY":"Tuning key"
+    "TUNING_KEY":"Tuning key",
+    "CURRENT_TEMPERAMENT": "Current Temperament",
+    "SAVE_CURRENT_TEMPERAMENT" :" Save Current Temperament",
+    "STANDARD": "Standard",
+    "NEW_TEMPERAMENT": "New Temperament",
+    "CUSTOM_TEMPERAMENT":"Custom Temperament",
+    "KEEP_AS": "KEEP AS",
+    "SAVE": "save"
 }

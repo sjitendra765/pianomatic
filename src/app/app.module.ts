@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouteReuseStrategy } from '@angular/router';
-
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
@@ -15,15 +16,18 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {MainmenuComponent} from './components/mainmenu/mainmenu.component'
+import {TemperamentComponent} from './components/temperament/temperament.component'
 
+import { Globalization } from '@ionic-native/globalization/ngx';
+import { IonicStorageModule } from '@ionic/storage';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
 }
 @NgModule({
-  declarations: [AppComponent, MainmenuComponent],
+  declarations: [AppComponent, MainmenuComponent, TemperamentComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule,
+  imports: [BrowserModule,CommonModule, FormsModule, IonicModule.forRoot(), IonicStorageModule.forRoot(), AppRoutingModule, HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -36,6 +40,7 @@ export function createTranslateLoader(http: HttpClient) {
     SplashScreen,
     BluetoothSerial,
     ScreenOrientation,
+    Globalization,
     Diagnostic,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BluetoothService

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PopoverController } from '@ionic/angular';
 import { TemperamentComponent } from '../temperament/temperament.component';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-mainmenu',
@@ -8,8 +9,12 @@ import { TemperamentComponent } from '../temperament/temperament.component';
   styleUrls: ['./mainmenu.component.scss'],
 })
 export class MainmenuComponent implements OnInit {
-
-  constructor( private popoverController: PopoverController) { }
+  show:boolean= false;
+  store;
+  name:string;
+  constructor( private popoverController: PopoverController, private storage: Storage,) {
+    this.store = storage
+   }
 
   ngOnInit() {}
   async openTemperament(ev){
@@ -19,6 +24,18 @@ export class MainmenuComponent implements OnInit {
       cssClass: 'popover_class',
     });
     return await popover.present();
+  }
+  openInput(){
+    this.show = !this.show;
+  }
+  save(){
+    this.show  = false;
+    this.store.get('default').then(val=>{
+      this.store.set(this.name,val)
+      this.store.remove('default')
+    })
+    
+   // window.location.reload()
   }
 
 }

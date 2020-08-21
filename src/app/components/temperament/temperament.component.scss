@@ -1,0 +1,40 @@
+div{
+    text-align: center;
+}
+.heading{
+    background-color: rgb(255, 254, 254);
+    //width: 100%;
+   // border: 5px solid rgb(128, 19, 0);
+    //padding: 5px;
+    margin: 10px;
+    display: flex;
+}
+.spanbox{
+    flex: 1;
+    padding:0;
+    margin: 0;
+    background-color: red;
+    height: 20px;
+    width: 100px !important;
+}
+.newsetting{
+    display: inline;
+}
+ul li{
+    list-style-type: none;
+    text-align: left;
+}
+.listtemp{
+    background-color: rgb(255, 254, 254);
+    width: 200px;
+    border: 5px solid red;
+    //padding: 5px;
+    margin: 50px;
+    margin-top: 0px !important;
+    margin-left:10px !important;
+   // height: 100px;
+}
+
+.popover_class{
+    border: 2px solid red;
+}

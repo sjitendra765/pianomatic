@@ -3,10 +3,35 @@
     background-color: green;
 }
 ion-icon{
-    font-size: 50px;
+    //font-size: 50px;
     background-color: green;
     margin: 0;
+    color: red;
+}
+
+#background-content {
+    background-color: green !important;
+}
+.standard {
+    display: inline-block;
+  }
+.h3{
+    margin-top:0px;
+    padding-top: 20px;
+    background-color: green;
+    margin-bottom: 0px;
+    color: white;
+}
+div {
+    text-align: center;
 }
 .arrowbut{
     padding: 0;
+}
+.savebox{
+  background-color: rgb(255, 254, 254);
+  width: 250px;
+  border: 5px solid red;
+  //padding: 5px;
+  margin: 50px;
 }
