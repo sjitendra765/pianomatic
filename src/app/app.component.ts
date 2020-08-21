@@ -31,7 +31,8 @@ export class AppComponent {
   }
   async initTranslate() {
    // this.translate.setDefaultLang('es');
-   var lang = 'es'
+   console.log(this.translate.getBrowserLang())
+   var lang = this.translate.getBrowserLang()
    try{
      var getVal  = await this.globalization.getPreferredLanguage()
      lang = getVal.value.substring(0,2)

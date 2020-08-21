@@ -32,21 +32,21 @@ export class TemperamentComponent implements OnInit {
   openInput(){
     this.show = true;
   }
-  save(){
+  async save(){
     this.show  = false;
-    this.store.get('default').then(val=>{
-      this.store.set(this.name,val)
+    this.store.get('default').then(async val=>{
+      await this.store.set(this.name,val)
       this.store.remove('default')
     })
     
     window.location.reload()
   }
-  selectSetting(k){
-    this.store.set('name',k)
+  async selectSetting(k){
+    await this.store.set('name',k)
     window.location.reload()
   }
-  newSetting(){
-    this.store.set('name','')
+  async newSetting(){
+    await this.store.set('name','')
     window.location.reload()
   }
 
