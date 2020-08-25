@@ -40,11 +40,7 @@ export class BluetoothPage implements OnInit {
     })
   }
   sendData(){
-<<<<<<< .merge_file_a25552
     var message="test";
-=======
-    var message = "test"
->>>>>>> .merge_file_a26900
     this.bluetooth.dataInOut(message).subscribe(data => {
       console.log(data)
     }),(error)=>{
