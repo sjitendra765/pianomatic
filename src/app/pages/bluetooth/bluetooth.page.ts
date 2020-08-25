@@ -40,7 +40,8 @@ export class BluetoothPage implements OnInit {
     })
   }
   sendData(){
-    this.bluetooth.sendMessage(1,7).then(data => {
+    var message="test";
+    this.bluetooth.dataInOut(message).subscribe(data => {
       console.log(data)
     }),(error)=>{
       console.log("error sending data",error)
