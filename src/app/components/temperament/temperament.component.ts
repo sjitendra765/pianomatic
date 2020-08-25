@@ -29,18 +29,6 @@ export class TemperamentComponent implements OnInit {
     });
   }
 
-  openInput(){
-    this.show = true;
-  }
-  async save(){
-    this.show  = false;
-    this.store.get('default').then(async val=>{
-      await this.store.set(this.name,val)
-      this.store.remove('default')
-    })
-    
-    window.location.reload()
-  }
   async selectSetting(k){
     await this.store.set('name',k)
     window.location.reload()
