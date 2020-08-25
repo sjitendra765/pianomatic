@@ -71,34 +71,23 @@ export class BluetoothService {
     });
   }
 
-  getBattery(){
-    return new Promise((resolve, reject)=>{
-      this.bluetoothSerial.read().then(data=>{
-        resolve(data);
-      }).catch(error=>{
-        reject(error);
-      })
-    })
-  }
-
-  sendMessage(direction, revolution){
-    return new Promise((resolve, reject)=>{
-      this.bluetoothSerial.write([direction, revolution]).then(success=>{
-        resolve(success);
-      }).catch(error=>{
-        reject(error);
-      })
-    })
-  }
-
-  setPrecision( precision){
-    return new Promise((resolve, reject)=>{
-      this.bluetoothSerial.write(precision).then(success=>{
-        resolve(success);
-      }).catch(error=>{
-        reject(error);
-      })
-    })
+  
+  dataInOut(message: string): Observable<any> {
+    return Observable.create(observer => {
+      this.bluetoothSerial.isConnected().then((isConnected) => {
+        this.reader = from(this.bluetoothSerial.write(message)).pipe(mergeMap(() => {
+            return this.bluetoothSerial.subscribeRawData();
+          })).pipe(mergeMap(() => {
+            return this.bluetoothSerial.readUntil('\n');   
+          }));
+        this.reader.subscribe(data => {
+          observer.next(data);
+        });
+      }, notConected => {
+        observer.next('BLUETOOTH.NOT_CONNECTED');
+        observer.complete();
+      });
+    });
   }
 
   stop(): Promise<boolean> {
