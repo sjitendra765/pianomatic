@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,NgZone   } from '@angular/core';
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-temperament',
@@ -6,9 +7,35 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./temperament.component.scss'],
 })
 export class TemperamentComponent implements OnInit {
+  show:boolean= false;
+  name:string;
+  list:Array<any>= []
+  store;
+  constructor(private storage: Storage,private zone: NgZone) {
+    this.store = storage
+   }
+   ngOnInit(){
+    this.store.forEach((v,k) => {
+      if(k!="default" && k!= "name"){
+        this.list.push(k)
+      }
+    });
+   }
+   ionViewWillEnter() {
+    this.store.forEach((v,k) => {
+      if(k!="default" && k!= "name"){
+       // this.list.push(k)
+      }
+    });
+  }
 
-  constructor() { }
-
-  ngOnInit() {}
+  async selectSetting(k){
+    await this.store.set('name',k)
+    window.location.reload()
+  }
+  async newSetting(){
+    await this.store.set('name','')
+    window.location.reload()
+  }
 
 }

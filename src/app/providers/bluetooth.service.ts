@@ -71,6 +71,10 @@ export class BluetoothService {
     });
   }
 
+<<<<<<< .merge_file_a12296
+=======
+  
+>>>>>>> .merge_file_a10432
   dataInOut(message: string): Observable<any> {
     return Observable.create(observer => {
       this.bluetoothSerial.isConnected().then((isConnected) => {

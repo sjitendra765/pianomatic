@@ -8,6 +8,7 @@ import {Keyboard} from '../../models/piano-keyboard';
 import { Platform } from '@ionic/angular';
 import {Service} from '../../providers/dialogueBox.service'
 import { createAnimation } from "@ionic/core";
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'app-keyboard',
@@ -15,7 +16,8 @@ import { createAnimation } from "@ionic/core";
   styleUrls: ['./keyboard.page.scss'],
 })
 export class KeyboardPage implements OnInit {
-  keyboardData = KeyboardData
+  keyboardData:any = KeyboardData;
+  key:any;
   public WIDTH: number
   public HEIGHT: number
 
@@ -28,9 +30,9 @@ export class KeyboardPage implements OnInit {
   progressInterval;
   width = 3330
   dialogueWidth: number;
-  
+  store: any;
   constructor(
-    private screenOrientation: ScreenOrientation, platform:Platform, private el: ElementRef, @Inject(Service) service, 
+    private screenOrientation: ScreenOrientation, platform:Platform,private storage: Storage, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
      { 
       platform.ready().then(() => {
@@ -40,18 +42,32 @@ export class KeyboardPage implements OnInit {
         this.HEIGHT = platform.height() -1;
       });
       this.service = service
+      this.store = storage
      }
   ngOnInit() {
-    console.log(this.keyboardData[0].color)
+   // console.log(this.keyboardData[0].color)
+   
     
   }
   async ionViewWillEnter(){
-    for(var i=0; i< this.keyboardData.length; i++){
+    await this.store.set("default", this.keyboardData)
+    var name = await this.store.get('name')
+    if(name == '' || name == null){
+      this.key = await this.store.get('default')
+    }else{
+      this.key = await this.store.get(name)
+    }
+    for(var i=0; i< this.key.length; i++){
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[i])
-      await this.service.addDynamicComponent(this.keyboardData[i].frequency, this.keyboardData[i].name) 
+      this.service.addDynamicComponent(this.key[i]).subscribe(k=>{
+        this.key = [...this.key.slice(0, k.id-1), k, ...this.key.slice(k.id)]
+        this.store.set('default', this.key);
+      }) 
+      
       //console.log(this.keyboardData[i].frequency)
       //this.service.updateComponent(this.keyboardData[i].frequency)
     }
+    
   }
     // set to landscape
   async onPianoKeyPress(event,idx){ //on pianoKey press
@@ -90,7 +106,6 @@ export class KeyboardPage implements OnInit {
       });
       this.prevIdx = idx;
       this.prevKey = event.target;    
-    
   }
 
     // creating animation for dialogue box
