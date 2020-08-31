@@ -4,7 +4,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'keyboard',
+    redirectTo: 'frequency-analyser',
     pathMatch: 'full'
   },
   {
@@ -19,6 +19,11 @@ const routes: Routes = [
     path: 'device-permission',
     loadChildren: () => import('./pages/device-permission/device-permission.module').then( m => m.DevicePermissionPageModule)
   },
+  {
+    path: 'frequency-analyser',
+    loadChildren: () => import('./pages/frequency-analyser/frequency-analyser.module').then( m => m.FrequencyAnalyserPageModule)
+  },
+
 
 ];
 
