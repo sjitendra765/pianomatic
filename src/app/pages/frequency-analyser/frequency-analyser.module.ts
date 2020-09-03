@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { FrequencyAnalyserPageRoutingModule } from './frequency-analyser-routing.module';
 
 import { FrequencyAnalyserPage } from './frequency-analyser.page';
+import {FrequencyAnalyzerService} from '../../providers/frequency-analyzer.service'
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { FrequencyAnalyserPage } from './frequency-analyser.page';
     IonicModule,
     FrequencyAnalyserPageRoutingModule
   ],
+  providers: [FrequencyAnalyzerService],
   declarations: [FrequencyAnalyserPage]
 })
 export class FrequencyAnalyserPageModule {}

@@ -17,6 +17,7 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import {MainmenuComponent} from './components/mainmenu/mainmenu.component'
 import {TemperamentComponent} from './components/temperament/temperament.component'
+import {FrequencyAnalyzerService} from './providers/frequency-analyzer.service'
 
 import { Globalization } from '@ionic-native/globalization/ngx';
 import { IonicStorageModule } from '@ionic/storage';
@@ -42,6 +43,7 @@ export function createTranslateLoader(http: HttpClient) {
     ScreenOrientation,
     Globalization,
     Diagnostic,
+    FrequencyAnalyzerService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BluetoothService
   ],
