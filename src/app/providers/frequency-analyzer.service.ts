@@ -82,6 +82,7 @@ export class FrequencyAnalyzerService {
       rms += val*val;
     }
     rms = Math.sqrt(rms/SIZE);
+    //rms = Math.sqrt(rms/BUFFER_SIZE);
     if (rms<0.01) // not enough signal
       return -1;
   
