@@ -7,6 +7,10 @@ export class FrequencyAnalyzerService {
   
   MIN_SAMPLES = 0;  // will be initialized when AudioContext is created.
   GOOD_ENOUGH_CORRELATION = 0.9; // this is the "bar" for how close a correlation needs to be
+  THRESHOLD_WINDOW_SIZE = 11
+  THRESHOLD_MULTIPLIER = 10
+  SAMPLE_RATE
+  WINDOW_SIZE
   constructor() { }
   noteFromPitch( frequency ) {
     var noteNum = 12 * (Math.log( frequency / 440 )/Math.log(2) );
@@ -20,9 +24,53 @@ export class FrequencyAnalyzerService {
   centsOffFromPitch( frequency, note ) {
     return Math.floor( 1200 * Math.log( frequency / this.frequencyFromNoteNumber( note ))/Math.log(2) );
   }
+  calculateThreshold(spectrum, lastSpectrum){
+    var segments_buf = parseInt(this.SAMPLE_RATE) / parseInt(this.WINDOW_SIZE)
+    var thresholding_window_size = this.THRESHOLD_WINDOW_SIZE
+    var last_spectrum = []
+    for(var i=0;i<this.WINDOW_SIZE;i++){
+      last_spectrum.push(0)
+    } 
+    last_spectrum = lastSpectrum
+    var last_flux = []
+    for(var i=0;i<segments_buf;i++){
+      last_flux.push(0)
+    }
+    //deque(
+    //    np.zeros(segments_buf, dtype=np.int16), segments_buf)
+    var last_prunned_flux = 0
+    //flux = sum([max(spectrum[n] - last_spectrum[n], 0)
+    var flux = 0;
+    for(var i=0; i< this.WINDOW_SIZE;i++){
+      flux += (spectrum[i] > last_spectrum[i]) ? spectrum[i] - last_spectrum[i] :0
+    }
+    var thresholdFlux = last_flux.slice(segments_buf - thresholding_window_size, segments_buf)
+    let average = (array) => array.reduce((a, b) => a + b) / array.length;
+    var thresholded = average(thresholdFlux) * this.THRESHOLD_MULTIPLIER;
+    var prunned = (thresholded <= flux) ? flux - thresholded : 0
+    var peak = (prunned > last_prunned_flux) ? prunned:0
+    last_prunned_flux = prunned
+    return peak ;
+    /*
+      self._last_flux.append(flux)
+
+        thresholded = np.mean(
+            self._get_flux_for_thresholding()) * THRESHOLD_MULTIPLIER
+        prunned = flux - thresholded if thresholded <= flux else 0
+        peak = prunned if prunned > self._last_prunned_flux else 0
+        self._last_prunned_flux  = prunned
+        return peak
+    */
+    //  for n in xrange(self._window_size)])
+    if(thresholding_window_size <= segments_buf){
+
+    }
+  }
   autoCorrelate( buf, sampleRate ) {
+    this.SAMPLE_RATE = sampleRate
     var SIZE = buf.length;
     var MAX_SAMPLES = Math.floor(SIZE/2);
+    this.WINDOW_SIZE = SIZE
     var best_offset = -1;
     var best_correlation = 0;
     var rms = 0;

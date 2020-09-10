@@ -1,8 +1,9 @@
 <div class="dialogue">
       <h3>{{"TUNING_KEY" | translate}} {{keyData.name}}</h3>
       <ion-icon name="arrow-up-outline" (click)="increaseFreq()"></ion-icon>
-      <p>{{displayFreq}} <b>hz</b></p>
+      <p>{{displayFreq}} <b>hz</b></p>      
       <ion-icon name="arrow-down-outline" (click)="decreaseFreq()"></ion-icon>
+      <p>Piano Frequency {{PianoFreq}} hz</p>
       <ion-img [src]="imgSrc"></ion-img>
       <h3>{{displayThreshold}} HZ</h3>
 </div>

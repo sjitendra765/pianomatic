@@ -24,7 +24,6 @@ export class FrequencyAnalyserPage implements OnInit {
 
 
     const dataArray = new Float32Array(analyser.frequencyBinCount);
-    console.log("count",analyser.frequencyBinCount)
     
     var frequencyAnalyser = this.freq
  // this gets called via requestAnimationFrame, so runs roughly every 1s
@@ -40,7 +39,7 @@ export class FrequencyAnalyserPage implements OnInit {
        var detune = frequencyAnalyser.centsOffFromPitch( pitch, note );
        console.log("detune", detune)
      }
-  }, 1000);
+  }, 50);
 
   }
 
