@@ -33,7 +33,7 @@
       </ion-text>
     </ion-item>
   </ion-list>
-  <div>select device</div>
+  <div><button (click)="search()">search</button></div>
   <div>
     <button ion-button full class="submit-button" *ngIf="listToggle" (click)="sendData()">
       <ion-icon name="bluetooth"></ion-icon>&nbsp;SEND</button>

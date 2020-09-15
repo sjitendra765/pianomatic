@@ -96,9 +96,9 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
       } 
     }
     else{
-      await audioContext.close();
       window.cancelAnimationFrame(this.recordId)
       window.cancelAnimationFrame(this.drawVisual)
+      await audioContext.close();
     }
   }
   async increaseFreq(){   

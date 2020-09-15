@@ -9,6 +9,7 @@ import { Platform } from '@ionic/angular';
 import {Service} from '../../providers/dialogueBox.service'
 import { createAnimation } from "@ionic/core";
 import { Storage } from '@ionic/storage';
+import {BluetoothService} from '../../providers/bluetooth.service'
 
 @Component({
   selector: 'app-keyboard',
@@ -32,7 +33,7 @@ export class KeyboardPage implements OnInit {
   dialogueWidth: number;
   store: any;
   constructor(
-    private screenOrientation: ScreenOrientation, platform:Platform,private storage: Storage, private el: ElementRef, @Inject(Service) service, 
+    private screenOrientation: ScreenOrientation,private bluetoothModule: BluetoothService, platform:Platform,private storage: Storage, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
      { 
       platform.ready().then(() => {
@@ -73,12 +74,35 @@ export class KeyboardPage implements OnInit {
       //this.service.updateComponent(this.keyboardData[i].frequency)
     }
 
-    
+    let subscriptoin = this.bluetoothModule.dataInOut('shiftkey').subscribe(async r=>{
+       if(r.charAt(0)=='p' || r.charAt(0)=='n'){
+        let event
+         let idx
+         if(this.prevIdx || this.prevKey){
+          if(r.charAt(0)=='p'){
+            idx = this.prevIdx -1
+            event = document.querySelector('.key'+ idx)
+            //event = event.previousSibling
+          }
+          else{
+            idx = this.prevIdx +1
+            event = document.querySelector('.key'+idx)
+            //event = event.nextSibling
+          }
+         }
+         else{
+          idx = 0
+           event = document.querySelector('.list')
+         }
+         
+         this.onPianoKeyPress(event,idx)
+       }
+     })
     
   }
     // set to landscape
   async onPianoKeyPress(event,idx){ //on pianoKey press
-    this.service.updateComponent(idx)
+      this.service.updateComponent(idx)
      this.keyboardData[idx].color = this.keyboardData[idx].color+'Active'
      if(this.prevKey){        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
@@ -98,7 +122,7 @@ export class KeyboardPage implements OnInit {
       }
       
       this.width = 3630
-      const dialogue = event.target.nextSibling
+      const dialogue = event.nextSibling
      /* this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])
       this.service.addDynamicComponent()*/      
       // creating animation to open the dialogue when key pressed
@@ -112,7 +136,7 @@ export class KeyboardPage implements OnInit {
         inline: "center"
       });
       this.prevIdx = idx;
-      this.prevKey = event.target;    
+      this.prevKey = event;    
   }
 
     // creating animation for dialogue box

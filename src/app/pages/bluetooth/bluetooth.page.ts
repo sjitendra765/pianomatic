@@ -24,7 +24,12 @@ export class BluetoothPage implements OnInit {
   ) {
   }
   ngOnInit() {
+    this.search()
+      
+  }
+  search(){
     this.showSpinner = true;
+    this.listToggle = false
       this.bluetooth.search().then((devices: Array<Object>) => {
         this.listToggle = true
         this.devices = devices;

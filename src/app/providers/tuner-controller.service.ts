@@ -24,7 +24,8 @@ export class TunerControllerService {
     
   }
 
-  checkFrequency(frequency ,idx){
+  checkFrequency(frequency ,actualFrequency){
+    return frequency == actualFrequency
     
   }
 }
