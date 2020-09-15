@@ -50,14 +50,19 @@ export class KeyboardPage implements OnInit {
     
   }
   async ionViewWillEnter(){
+
     await this.store.set("default", this.keyboardData)
-    var name = await this.store.get('name')
+    let name = await this.store.get('name')
     if(name == '' || name == null){
       this.key = await this.store.get('default')
     }else{
       this.key = await this.store.get(name)
+      if(this.key == null){
+        this.key = await this.store.get('default')
+        await this.store.remove('name')
+      }
     }
-    for(var i=0; i< this.key.length; i++){
+    for(let i=0; i< this.key.length; i++){
       this.service.setRootViewContainerRef(this.widgetTargets.toArray()[i])
       this.service.addDynamicComponent(this.key[i]).subscribe(k=>{
         this.key = [...this.key.slice(0, k.id-1), k, ...this.key.slice(k.id)]
@@ -67,14 +72,17 @@ export class KeyboardPage implements OnInit {
       //console.log(this.keyboardData[i].frequency)
       //this.service.updateComponent(this.keyboardData[i].frequency)
     }
+
+    
     
   }
     // set to landscape
   async onPianoKeyPress(event,idx){ //on pianoKey press
+    this.service.updateComponent(idx)
      this.keyboardData[idx].color = this.keyboardData[idx].color+'Active'
-     try{        
+     if(this.prevKey){        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
-        var prevDialogue = this.prevKey.nextSibling
+        let prevDialogue = this.prevKey.nextSibling
         let animation = this.dialogueAnimation(prevDialogue, 300, 0, 'ease-out',0,0, "none")
         // creating reverse animation to closes the dialogue when key released
         animation.play();
@@ -82,14 +90,13 @@ export class KeyboardPage implements OnInit {
         if(idx == this.prevIdx)
         {
           this.prevIdx = undefined
+          this.prevKey = undefined
           this.width = 3330
           return
         }
         
       }
-      catch(err){
-        console.log(err)
-      }
+      
       this.width = 3630
       const dialogue = event.target.nextSibling
      /* this.service.setRootViewContainerRef(this.widgetTargets.toArray()[idx])

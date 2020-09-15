@@ -2,7 +2,8 @@ import {
     ComponentFactoryResolver,
     Injectable,
     Inject,
-    ReflectiveInjector
+    ReflectiveInjector,
+    EventEmitter
   } from '@angular/core'
   import { Observable, Subscription, from } from 'rxjs';
   import { KeyDialogueComponent } from '../components/key-dialogue/key-dialogue.component'
@@ -12,6 +13,7 @@ import {
     rootViewContainer: any
     currentComponent :any
     private reader: Observable<any>;
+    index: EventEmitter<number> = new EventEmitter();
 
     constructor(@Inject(ComponentFactoryResolver) factoryResolver) {
       this.factoryResolver = factoryResolver
@@ -26,7 +28,7 @@ import {
         .create(this.rootViewContainer.parentInjector)
       this.rootViewContainer.insert(component.hostView)
       component.instance.keyData = keyData
-      this.currentComponent = component
+      this.currentComponent = component.instance
       return Observable.create(observer => {
         this.reader = component.instance.newKeyData
         this.reader.subscribe(data => {
@@ -34,9 +36,12 @@ import {
         });
       })
     }
-    updateComponent() {
-      
+    updateComponent(idx){
+      this.index.emit(idx)
       //this.rootViewContainer.instance.frequency = `223`;
+    }
+    getIndexEmitter() {
+      return this.index;
     }
     removeComponent(idx){
       this.rootViewContainer.remove(idx)

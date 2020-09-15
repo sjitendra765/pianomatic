@@ -16,8 +16,8 @@ export class DevicePermissionPage implements OnInit {
   
   async ngOnInit(){
     try{
-      var getBluetoothAuth = await this.diagnostic.isBluetoothAvailable()
-      var getMicrophoneAuth = await this.diagnostic.isMicrophoneAuthorized()
+      let getBluetoothAuth = await this.diagnostic.isBluetoothAvailable()
+      let getMicrophoneAuth = await this.diagnostic.isMicrophoneAuthorized()
       if(getBluetoothAuth && getMicrophoneAuth){
         this.route.navigate(['/keyboard']);
       }
@@ -28,8 +28,8 @@ export class DevicePermissionPage implements OnInit {
   }
   async askForPermission(){
     try{
-      var getBluetoothAuth = await this.diagnostic.isBluetoothAvailable();
-      var getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
+      let getBluetoothAuth = await this.diagnostic.isBluetoothAvailable();
+      let getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
       if(!getBluetoothAuth){
         //await this.diagnostic.requestBluetoothAuthorization()
       }

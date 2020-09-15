@@ -73,7 +73,7 @@ export class BluetoothService {
 
   
   dataInOut(message: string): Observable<any> {
-    return Observable.create(observer => {
+    return new Observable(observer => {
       this.bluetoothSerial.isConnected().then((isConnected) => {
         this.reader = from(this.bluetoothSerial.write(message)).pipe(mergeMap(() => {
             return this.bluetoothSerial.subscribeRawData();
