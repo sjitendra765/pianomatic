@@ -69,13 +69,5 @@ export class BluetoothPage implements OnInit {
     }
   }
 
- async isbusy(){
-    var subscription = this.Tuner.isBusy().subscribe(r=>{
-      if(r ==1){
-        console.log("busy check",r)
-        subscription.unsubscribe();
-      }      
-    })
-  }
-  
+ 
 }

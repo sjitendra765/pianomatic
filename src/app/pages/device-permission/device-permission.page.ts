@@ -66,7 +66,7 @@ export class DevicePermissionPage implements OnInit {
           const selectDevice = await this.Bluetooth.connect(deviceList[i].address)
           let subscription = this.Bluetooth.dataInOut('h').subscribe(async r=>{
             console.log("t",r,"t")
-            if(r == "namaste\n"){
+            if(r == "namaste\n" || r == "namaste"){
               console.log("correct device connected")
               this.presentToast('Bluetooth has connected successfully', 'primary')
               this.route.navigate(['/keyboard'])    
