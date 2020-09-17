@@ -47,7 +47,7 @@ export class KeyboardPage implements OnInit {
      }
   ngOnInit() {
    // console.log(this.keyboardData[0].color)
-   
+   //this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
     
   }
   async ionViewWillEnter(){

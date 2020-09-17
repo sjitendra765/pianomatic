@@ -48,7 +48,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     let canvas = <HTMLCanvasElement> document.querySelector('.visualizer'+this.keyData.id);
     this.canvasCtx = canvas.getContext("2d");
     const audioContext = new window.AudioContext();
-
+    let gainNode = audioContext.createGain();
     if(this.keyData.id == i+1 && this.prevIdx!= i+1){      
       const analyser = audioContext.createAnalyser();
       let distortion = audioContext.createWaveShaper();
@@ -64,7 +64,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
       if( getMicrophoneAuth){
         navigator.mediaDevices.getUserMedia(
         {audio: true})
-        .then(stream => audioContext.createMediaStreamSource(stream).connect(analyser).connect(distortion).connect(audioContext.destination))
+        .then(stream => audioContext.createMediaStreamSource(stream).connect(distortion).connect(gainNode).connect(analyser).connect(audioContext.destination))
         .catch(err => console.log(err))
 
         this.analyser = analyser
@@ -76,6 +76,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
         let _this  = this;
         let getFreqeuncy = function(){
           _this.recordId = requestAnimationFrame(getFreqeuncy)
+          analyser.fftSize = 2048;
           analyser.getFloatTimeDomainData(dataArray);
           let ac = frequencyAnalyser.autoCorrelate(dataArray, audioContext.sampleRate)
           _this.PianoFreq = ac.toFixed(2)
@@ -98,6 +99,8 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     else{
       window.cancelAnimationFrame(this.recordId)
       window.cancelAnimationFrame(this.drawVisual)
+      gainNode.gain.value = 0
+      this.drawVisual = undefined
       await audioContext.close();
     }
   }
@@ -147,7 +150,6 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
       _this.drawVisual = requestAnimationFrame(drawAlt);
 
         _this.analyser.getByteFrequencyData(dataArrayAlt);
-
         _this.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
         _this.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 

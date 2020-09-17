@@ -21,7 +21,7 @@ export class BluetoothService {
   search(): Promise<Object> {
     return new Promise((resolve, reject) => {
       this.bluetoothSerial.isEnabled().then(success => {
-        this.bluetoothSerial.discoverUnpaired().then(response => {
+        this.bluetoothSerial.list().then(response => {
           if (response.length > 0) {
             resolve(response);
           } else {

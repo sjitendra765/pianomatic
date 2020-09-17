@@ -28,4 +28,37 @@ export class TunerControllerService {
     return frequency == actualFrequency
     
   }
+  calculateSteps(frequency, actualFrequency){
+    var flag = 0;
+    var precision_per_step =0;  
+    var steps = 1;
+    var tolerance_degree 
+    //over_step_tuning_modifier 5 to 10 %
+    while(1)
+    {
+     var required_frequency = actualFrequency
+      var real_frequency = frequency
+
+      if (required_frequency * 1.05 > real_frequency){
+        //spin_engine_clockwise(nsteps)
+      }
+      if (Math.abs(required_frequency - real_frequency) < (required_frequency*0.03) && flag == 1){
+        
+        // then the key has been tuned properly
+        flag = 0;
+        steps = 0
+      }
+        // the frequencies will very rarely match. they have to be very close to each other. 0.03 would be our tolerance degree. (in decimals)
+      if(Math.abs(required_frequency - real_frequency) < (required_frequency*0.04)){
+        steps++; //this part is very experimental
+      }
+
+      if (real_frequency> required_frequency* 1.05){
+        flag = 1; 
+        //spin_engine_counterclockwise(nsteps)
+
+      }
+        
+    }
+  }
 }

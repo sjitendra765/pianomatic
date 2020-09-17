@@ -25,7 +25,8 @@ export class AppComponent {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
+      this.statusBar.hide();
+      this.statusBar.overlaysWebView(true);
       this.splashScreen.hide();
     });
   }

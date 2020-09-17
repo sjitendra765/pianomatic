@@ -16,7 +16,7 @@ export class TemperamentComponent implements OnInit {
    }
    ngOnInit(){
     this.store.forEach((v,k) => {
-      if(k!="default" && k!= "name"){
+      if(k!="default" && k!= "name" && k!= "bluetoothId"){
         this.list.push(k)
       }
     });
