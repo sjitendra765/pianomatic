@@ -38,9 +38,9 @@ export class BluetoothService {
   getPermission(){
     return new Promise((resolve, reject)=>{
       this.bluetoothSerial.isEnabled().then(success =>{
-        resolve("Bluetooth has permission")
+        resolve("BLUETOOTH.HAS_PERMISSION")
       }).catch((error)=>{
-        reject("BLUETOOTH NOT ENABLED")
+        reject("BLUETOOTH.NOT_AVAILABLE")
       })
     })
   }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subscription, from, observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,76 @@ export class FrequencyAnalyzerService {
   THRESHOLD_MULTIPLIER = 10
   SAMPLE_RATE
   WINDOW_SIZE
-  constructor() { }
+  audioContext
+  analyser
+  analyser1;
+  distortion
+  recordId = null
+  drawVisual = null
+  private reader: Observable<any>;
+  constructor() { 
+    this.audioContext = new window.AudioContext();
+    this.analyser = this.audioContext.createAnalyser();
+    this.distortion = this.audioContext.createWaveShaper();
+  }
+
+  startAnalysing(){
+    this.analyser.fftSize = 2048
+    navigator.mediaDevices.getUserMedia(
+      {audio: true})
+      .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser).connect(this.audioContext.destination))
+      .catch(err => console.log(err))
+      const dataArray = new Float32Array(this.analyser.frequencyBinCount);
+      const _this = this
+      let ac
+     // return new Observable(observer => {
+        let getFreqeuncy =  function(){
+          _this.recordId = requestAnimationFrame(getFreqeuncy)
+          _this.analyser.fftSize = 2048;
+          _this.analyser.getFloatTimeDomainData(dataArray);
+           ac = _this.autoCorrelate(dataArray, _this.audioContext.sampleRate)
+          //console.log(ac)
+          //_this.reader = ac
+         // _this.reader.subscribe(data => {
+         //   observer.next(data);
+        //  });
+        }
+        getFreqeuncy()
+      
+     // })
+  }
+  histogram(canvasCtx){
+    const WIDTH = 200
+    const HEIGHT = 100
+    this.analyser.fftSize = 256;
+    let bufferLengthAlt = this.analyser.frequencyBinCount;
+    console.log(bufferLengthAlt);
+    let dataArrayAlt = new Uint8Array(bufferLengthAlt);
+    let _this = this
+     //this.canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
+    let drawAlt = function() {
+      _this.drawVisual = requestAnimationFrame(drawAlt);
+
+        _this.analyser.getByteFrequencyData(dataArrayAlt);
+        canvasCtx.fillStyle = 'rgb(0, 0, 0)';
+        canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        let barWidth = (WIDTH / bufferLengthAlt) * 2.5;
+        let barHeight;
+        let x = 0;
+
+        for(let i = 0; i < bufferLengthAlt; i++) {
+          barHeight = dataArrayAlt[i];
+
+          canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
+          canvasCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
+
+          x += barWidth + 1;
+        }
+      };
+
+      drawAlt();
+  }
   /* returns the matched freqeuency
   */
   getFrequency( note ){

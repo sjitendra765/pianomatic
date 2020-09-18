@@ -63,9 +63,9 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
       }
       if( getMicrophoneAuth){
         navigator.mediaDevices.getUserMedia(
-        {audio: true})
-        .then(stream => audioContext.createMediaStreamSource(stream).connect(distortion).connect(gainNode).connect(analyser).connect(audioContext.destination))
-        .catch(err => console.log(err))
+          {audio: true})
+          .then(stream => audioContext.createMediaStreamSource(stream).connect(distortion).connect(gainNode).connect(analyser).connect(audioContext.destination))
+          .catch(err => console.log(err))
 
         this.analyser = analyser
         this.displayHistogram()
@@ -92,7 +92,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
             let detune = frequencyAnalyser.centsOffFromPitch( pitch, note );
           }
         }
-        getFreqeuncy()
+        getFreqeuncy() 
         this.prevIdx = i+1
       } 
     }
@@ -106,7 +106,9 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   }
   async increaseFreq(){   
   
-    this.keyData.frequency = this.keyData.frequency + (0.01* this.keyData.frequency)
+    //this.keyData.frequency = this.keyData.frequency + (0.01* this.keyData.frequency)
+    this.keyData.frequency = this.keyData.frequency + 0.5
+    
     //this.freq = this.keyData.frequency.toLocaleString("es-ES",{minimumFractionDigits: 2})
     
     this.keyData.frequency = parseFloat(this.keyData.frequency.toFixed(2))
@@ -116,7 +118,9 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.newKeyData.emit(this.keyData);
   }
   async decreaseFreq(){
-    this.keyData.frequency = this.keyData.frequency - (0.01* this.keyData.frequency)
+    //this.keyData.frequency = this.keyData.frequency - (0.01* this.keyData.frequency)
+    this.keyData.frequency = this.keyData.frequency - 0.5
+
     this.keyData.frequency = parseFloat(this.keyData.frequency.toFixed(2))
     this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed(2))
     this.displayFreq = await this.getNumVal(this.keyData.frequency)

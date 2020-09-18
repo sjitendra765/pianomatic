@@ -33,14 +33,15 @@ export class KeyboardPage implements OnInit {
   dialogueWidth: number;
   store: any;
   constructor(
-    private screenOrientation: ScreenOrientation,private bluetoothModule: BluetoothService, platform:Platform,private storage: Storage, private el: ElementRef, @Inject(Service) service, 
+     private screenOrientation: ScreenOrientation,private bluetoothModule: BluetoothService, platform:Platform,private storage: Storage, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
-     { 
+     {
+      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE); 
       platform.ready().then(() => {
         console.log('Width: ' + platform.width());
         console.log('Height: ' + platform.height());
-        this.WIDTH = platform.width();
-        this.HEIGHT = platform.height() -1;
+        this.HEIGHT = platform.width();
+        this.WIDTH = platform.height() -1;
       });
       this.service = service
       this.store = storage
@@ -139,6 +140,9 @@ export class KeyboardPage implements OnInit {
       this.prevKey = event;    
   }
 
+  ionViewDidLeave(){
+    this.screenOrientation.unlock()
+  }
     // creating animation for dialogue box
   dialogueAnimation(el,fromWidth, toWidth, easing, fromOpacity, toOpacity, display){
         return createAnimation()

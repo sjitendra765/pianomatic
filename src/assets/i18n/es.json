@@ -8,5 +8,18 @@
     "NEW_TEMPERAMENT": "Nuevo temperamento",
     "CUSTOM_TEMPERAMENT":"Temperamento personalizado",
     "KEEP_AS": "guarder como",
-    "SAVE": "salvar"
+    "SAVE": "salvar",
+    "GO_TO_BLUETOOTH":"Ir a la configuración de bluetooth",
+    "BLUETOOTH": {
+        "ADDRESS": "Dirección",
+        "NOT_FOUND": "No se encontró ningún dispositivo bluetooth asegúrese de que esta activado y arrastre hacia abajo para buscar de nuevo",
+        "CONNECTED": "Se conectó con el dispositivo",
+        "NOT_CONNECTED": "El Bluetooth no está conectado",
+        "NOT_DEVICES_FOUND": "No se encontraron dispositivos bluetooth",
+        "NOT_AVAILABLE_IN_THIS_DEVICE": "El bluetooth no esta disponible en este dispositivo",
+        "NOT_AVAILABLE": "El bluetooth no esta disponible",
+        "CANNOT_CONNECT": "No se puede conectar el bluetooth",
+        "SEARCHING": "Buscando dispositivos bluetooth",
+        "HAS_PERMISSION":"bluetooth tiene permiso"
+    }
 }

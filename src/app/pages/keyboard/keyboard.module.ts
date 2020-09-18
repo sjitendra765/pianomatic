@@ -11,6 +11,7 @@ import {KeyDialogueComponent} from '../../components/key-dialogue/key-dialogue.c
 import {Service} from "../../providers/dialogueBox.service"
 import {FrequencyAnalyzerService} from '../../providers/frequency-analyzer.service'
 import { TranslateModule } from '@ngx-translate/core';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 @NgModule({
   imports: [
     CommonModule,
@@ -19,7 +20,7 @@ import { TranslateModule } from '@ngx-translate/core';
     KeyboardPageRoutingModule,
     TranslateModule.forChild()
   ],
-  providers: [Service, FrequencyAnalyzerService],
+  providers: [Service, FrequencyAnalyzerService, ScreenOrientation],
   declarations: [KeyboardPage, KeyDialogueComponent],
   entryComponents: [KeyDialogueComponent]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
+import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx'
 import { TranslateService } from '@ngx-translate/core';
 import {BluetoothService} from '../../providers/bluetooth.service';
 import { environment } from '../../../environments/environment';
@@ -14,15 +15,14 @@ import { Storage } from '@ionic/storage';
 })
 export class DevicePermissionPage implements OnInit {
 
-  constructor(public toastController: ToastController,private storage: Storage,private diagnostic: Diagnostic, private route: Router,translate: TranslateService, private Bluetooth: BluetoothService) { 
+  constructor(private openNativeSettings: OpenNativeSettings,public toastController: ToastController,private storage: Storage,private diagnostic: Diagnostic, private route: Router,private translate: TranslateService, private Bluetooth: BluetoothService) { 
     //translate.setDefaultLang('en');
   }
   
   async ngOnInit(){
     try{
       let getBluetoothAuth = await this.diagnostic.isBluetoothAvailable()
-      let getMicrophoneAuth = await this.diagnostic.isMicrophoneAuthorized()
-      if(getBluetoothAuth && getMicrophoneAuth){
+      if(getBluetoothAuth){
         if(!environment.production)
           this.connectPairedDevice()
         else
@@ -36,15 +36,7 @@ export class DevicePermissionPage implements OnInit {
   async askForPermission(){
     try{
       let getBluetoothAuth = await this.diagnostic.isBluetoothAvailable();
-      let getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
-      if(!getBluetoothAuth){
-        //await this.diagnostic.requestBluetoothAuthorization()
-      }
-      if(!getMicrophoneAuth){
-        await this.diagnostic.requestMicrophoneAuthorization()
-      }
-      getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
-      if(getBluetoothAuth && getMicrophoneAuth){
+      if(getBluetoothAuth){
         if(!environment.production)
           this.connectPairedDevice()
         else
@@ -57,7 +49,14 @@ export class DevicePermissionPage implements OnInit {
     }
 
   }
-
+  async openBluetoothSetting(){
+    try{
+      await this.openNativeSettings.open("bluetooth")
+    }
+    catch(err){
+      console.log(err)
+    }
+  }
   async connectPairedDevice(){
     let deviceList = null
       try{
@@ -68,7 +67,7 @@ export class DevicePermissionPage implements OnInit {
             console.log("t",r,"t")
             if(r == "namaste\n" || r == "namaste"){
               console.log("correct device connected")
-              this.presentToast('Bluetooth has connected successfully', 'primary')
+              this.presentToast(this.translate.instant('BLUETOOTH.CONNECTED'), 'primary')
               this.route.navigate(['/keyboard'])    
               subscription.unsubscribe()
               return
@@ -83,7 +82,7 @@ export class DevicePermissionPage implements OnInit {
       }
       catch(err){
         console.log("try again",err)
-        this.presentToast(err,'danger')
+        this.presentToast(this.translate.instant(err),'danger')
       }
             
   }
