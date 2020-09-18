@@ -60,6 +60,12 @@ export class DevicePermissionPage implements OnInit {
   async connectPairedDevice(){
     let deviceList = null
       try{
+        const bluetoothId = await this.storage.get('bluetoothId');
+        if(bluetoothId){
+          await this.Bluetooth.connect(bluetoothId)
+          this.route.navigate(['/keyboard']) 
+          return
+        }
         deviceList  = await this.Bluetooth.search()
         for(let i =0; i< deviceList.length;i++){
           const selectDevice = await this.Bluetooth.connect(deviceList[i].address)
@@ -67,6 +73,7 @@ export class DevicePermissionPage implements OnInit {
             console.log("t",r,"t")
             if(r == "namaste\n" || r == "namaste"){
               console.log("correct device connected")
+              this.storage.set('bluetoothId',deviceList[i].address)
               this.presentToast(this.translate.instant('BLUETOOTH.CONNECTED'), 'primary')
               this.route.navigate(['/keyboard'])    
               subscription.unsubscribe()
