@@ -3,7 +3,7 @@
       <ion-icon name="arrow-up-outline" (click)="increaseFreq()"></ion-icon>
       <p>{{displayFreq}} <b>hz</b></p>      
       <ion-icon name="arrow-down-outline" (click)="decreaseFreq()"></ion-icon>
-      <p>Piano Frequency {{PianoFreq}} hz</p>
+      <p>{{PianoFreq}} hz</p>
       <canvas [ngClass]="'visualizer'+ keyData.id" width="200" height="50"></canvas> 
       <h3>{{displayThreshold}} HZ</h3>
 </div>

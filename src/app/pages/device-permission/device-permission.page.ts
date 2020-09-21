@@ -90,6 +90,7 @@ export class DevicePermissionPage implements OnInit {
       catch(err){
         console.log("try again",err)
         this.presentToast(this.translate.instant(err),'danger')
+        this.route.navigate(['/keyboard'])
       }
             
   }
