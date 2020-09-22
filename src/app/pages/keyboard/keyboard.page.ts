@@ -35,9 +35,9 @@ export class KeyboardPage implements OnInit {
   constructor(
      private screenOrientation: ScreenOrientation,private bluetoothModule: BluetoothService, platform:Platform,private storage: Storage, private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
-     {
-      this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE); 
+     { 
       platform.ready().then(() => {
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
         console.log('Width: ' + platform.width());
         console.log('Height: ' + platform.height());
         this.HEIGHT = platform.width();

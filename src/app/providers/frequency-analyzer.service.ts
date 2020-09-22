@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable , EventEmitter, OnInit} from '@angular/core';
 import { Observable, Subscription, from, observable } from 'rxjs';
-
+import { Diagnostic } from '@ionic-native/diagnostic/ngx'
+declare var ml5:any
 @Injectable({
   providedIn: 'root'
 })
-export class FrequencyAnalyzerService {
+export class FrequencyAnalyzerService implements OnInit {
   
   MIN_SAMPLES = 0;  // will be initialized when AudioContext is created.
   GOOD_ENOUGH_CORRELATION = 0.9; // this is the "bar" for how close a correlation needs to be
@@ -15,40 +16,67 @@ export class FrequencyAnalyzerService {
   audioContext
   analyser
   analyser1;
-  distortion
+  distortion;
+  gainNode
   recordId = null
   drawVisual = null
   private reader: Observable<any>;
-  constructor() { 
+  frequency: EventEmitter<any> = new EventEmitter();
+  constructor( private diagnostic: Diagnostic) { 
     this.audioContext = new window.AudioContext();
     this.analyser = this.audioContext.createAnalyser();
     this.distortion = this.audioContext.createWaveShaper();
-  }
-
-  startAnalysing(){
-    this.analyser.fftSize = 2048
+    this.gainNode = this.audioContext.createGain();
     navigator.mediaDevices.getUserMedia(
       {audio: true})
-      .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser).connect(this.audioContext.destination))
+      .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
       .catch(err => console.log(err))
-      const dataArray = new Float32Array(this.analyser.frequencyBinCount);
-      const _this = this
-      let ac
-     // return new Observable(observer => {
+  }
+  ngOnInit(){
+    
+  }
+  async startAnalysing(canvasCtx){
+    console.log("ml5 version", ml5.version)
+    let getMicrophoneAuth
+      try{      
+        await this.diagnostic.requestMicrophoneAuthorization()
+        getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
+      }catch(err){
+        getMicrophoneAuth = true
+      }
+      if( getMicrophoneAuth){
+        this.analyser.connect(this.gainNode).connect(this.audioContext.destination) 
+        this.gainNode.gain.value = 0
+        const dataArray = new Float32Array(this.analyser.frequencyBinCount);
+        const _this = this
+        let ac
+         // return new Observable(observer => {
+        this.histogram(canvasCtx)
         let getFreqeuncy =  function(){
           _this.recordId = requestAnimationFrame(getFreqeuncy)
           _this.analyser.fftSize = 2048;
           _this.analyser.getFloatTimeDomainData(dataArray);
            ac = _this.autoCorrelate(dataArray, _this.audioContext.sampleRate)
-          //console.log(ac)
-          //_this.reader = ac
-         // _this.reader.subscribe(data => {
-         //   observer.next(data);
-        //  });
+           _this.frequency.emit(ac)
         }
         getFreqeuncy()
-      
-     // })
+      }
+  }
+  stopAnalysing(){
+    try{
+      this.analyser.disconnect(this.gainNode)
+      this.gainNode.gain.value = 0
+      //this.distortion.disconnect();
+    }catch(err){
+      console.log(err)
+    }
+    window.cancelAnimationFrame(this.recordId)
+    window.cancelAnimationFrame(this.drawVisual)
+    this.drawVisual = undefined
+  } 
+  
+  getFrequencyEmmitter(){
+    return this.frequency;
   }
   histogram(canvasCtx){
     const WIDTH = 200

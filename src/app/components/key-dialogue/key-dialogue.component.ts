@@ -21,11 +21,13 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   displayThreshold;
   PianoFreq;
   analyser;
+  gainNode;
+  distortion;
   canvasCtx;
   recordId;
   drawVisual;
   prevIdx;
-
+  audioContext = null
   constructor(private diagnostic: Diagnostic,translate: TranslateService,private service:Service,private globalization: Globalization, private freq: FrequencyAnalyzerService){
     //translate.setDefaultLang('es');    
     this.translate = translate
@@ -37,6 +39,15 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed(2))
     this.displayFreq = await this.getNumVal(this.keyData.frequency)
     this.displayThreshold = '-' + await this.getNumVal(this.threshold)
+    this.audioContext = new window.AudioContext();
+    this.analyser = this.audioContext.createAnalyser();
+      this.distortion = this.audioContext.createWaveShaper();      
+      this.gainNode = this.audioContext.createGain();
+      
+      navigator.mediaDevices.getUserMedia(
+        {audio: true})
+        .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
+        .catch(err => console.log(err))
   }
   ionViewWillEnter(){
 
@@ -47,61 +58,32 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   async startRecording(i){
     let canvas = <HTMLCanvasElement> document.querySelector('.visualizer'+this.keyData.id);
     this.canvasCtx = canvas.getContext("2d");
-    const audioContext = new window.AudioContext();
-    let gainNode = audioContext.createGain();
-    if(this.keyData.id == i+1 && this.prevIdx!= i+1){      
-      const analyser = audioContext.createAnalyser();
-      let distortion = audioContext.createWaveShaper();
-      analyser.fftSize = 2048
-      let getMicrophoneAuth
-      try{
+    /*
+      this.freq.startAnalysing()
+      this.freq.histogram(this.canvasCtx)
+      this.freq.getFrequencyEmmitter().subscribe(r=>{
       
-        await this.diagnostic.requestMicrophoneAuthorization()
-        getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
-      }catch(err){
-        getMicrophoneAuth = true
-      }
-      if( getMicrophoneAuth){
-        navigator.mediaDevices.getUserMedia(
-          {audio: true})
-          .then(stream => audioContext.createMediaStreamSource(stream).connect(distortion).connect(gainNode).connect(analyser).connect(audioContext.destination))
-          .catch(err => console.log(err))
-
-        this.analyser = analyser
-        this.displayHistogram()
-        const dataArray = new Float32Array(analyser.frequencyBinCount);
-
-        let frequencyAnalyser = this.freq
-        // this gets called via requestAnimationFrame, so runs roughly every 1s
-        let _this  = this;
-        let getFreqeuncy = function(){
-          _this.recordId = requestAnimationFrame(getFreqeuncy)
-          analyser.fftSize = 2048;
-          analyser.getFloatTimeDomainData(dataArray);
-          let ac = frequencyAnalyser.autoCorrelate(dataArray, audioContext.sampleRate)
-          _this.PianoFreq = ac.toFixed(2)
-          if(ac.toFixed() == _this.keyData.frequency.toFixed())
-          {
-            console.log("frequency tuned")
-          }
-          console.log(ac)
-          if (ac == -1) {
-          } else {
-            let pitch = ac
-            let note =  frequencyAnalyser.noteFromPitch( pitch );
-            let detune = frequencyAnalyser.centsOffFromPitch( pitch, note );
-          }
-        }
-        getFreqeuncy() 
+      })
+    */
+    if((this.keyData.id == i+1)){    
+      if(this.prevIdx == i+1){
+        this.prevIdx = undefined
+        this.freq.stopAnalysing()
+      }  
+      else{
+        this.freq.startAnalysing(this.canvasCtx);
+        this.freq.getFrequencyEmmitter().subscribe(r=>{
+          console.log(r)
+          this.PianoFreq = r.toFixed(2)
+        })
         this.prevIdx = i+1
       } 
     }
     else{
-      window.cancelAnimationFrame(this.recordId)
-      window.cancelAnimationFrame(this.drawVisual)
-      gainNode.gain.value = 0
-      this.drawVisual = undefined
-      await audioContext.close();
+      if(this.prevIdx){
+        this.prevIdx = undefined
+        this.freq.stopAnalysing()
+      }      
     }
   }
   async increaseFreq(){   
@@ -141,36 +123,5 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     }
   }
 
-  displayHistogram(){
-    const WIDTH = 200
-    const HEIGHT = 100
-    this.analyser.fftSize = 256;
-    let bufferLengthAlt = this.analyser.frequencyBinCount;
-    console.log(bufferLengthAlt);
-    let dataArrayAlt = new Uint8Array(bufferLengthAlt);
-    let _this = this
-     //this.canvasCtx.clearRect(0, 0, WIDTH, HEIGHT);
-    let drawAlt = function() {
-      _this.drawVisual = requestAnimationFrame(drawAlt);
-
-        _this.analyser.getByteFrequencyData(dataArrayAlt);
-        _this.canvasCtx.fillStyle = 'rgb(0, 0, 0)';
-        _this.canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
-
-        let barWidth = (WIDTH / bufferLengthAlt) * 2.5;
-        let barHeight;
-        let x = 0;
-
-        for(let i = 0; i < bufferLengthAlt; i++) {
-          barHeight = dataArrayAlt[i];
-
-          _this.canvasCtx.fillStyle = 'rgb(' + (barHeight+100) + ',50,50)';
-          _this.canvasCtx.fillRect(x,HEIGHT-barHeight/2,barWidth,barHeight/2);
-
-          x += barWidth + 1;
-        }
-      };
-
-      drawAlt();
-  }
+  
 }
