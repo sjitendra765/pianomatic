@@ -1,6 +1,7 @@
 .inmenu{
     height: 100%;
-    background-color: green;
+    background-color: black;
+    position: relative;
 }
 ion-icon{
     //font-size: 50px;
@@ -8,12 +9,37 @@ ion-icon{
     margin: 0;
     color: red;
 }
-
+.current{
+    color: white;
+}
+.saveitem{
+    top:10px;
+    position: absolute;
+    margin: 20px;
+    display: flex;
+}
 #background-content {
     background-color: green !important;
 }
+
+.demo{
+    flex:2 1 auto;
+    height: 50px;
+}
 .standard {
     display: inline-block;
+  //  background-color: black !important;
+  }
+  .closed {
+    caret-color: white;
+    --placeholder-color: white;
+    --color: white;
+    //--highlight-background: transparent;
+    --background: black;
+  }
+  .item-native{
+      background: black !important;
+      color: white;
   }
 .h3{
     margin-top:0px;
@@ -28,10 +54,20 @@ div {
 .arrowbut{
     padding: 0;
 }
+.temp{
+    margin-top:0px;
+    top: 100px;
+    position: absolute;
+}
 .savebox{
+    //margin-top: 100px !important;
+    
+}
+.box{    
   background-color: rgb(255, 254, 254);
   width: 250px;
-  border: 5px solid red;
+  border: 5px solid #696B6D;
   //padding: 5px;
-  margin: 50px;
+  margin: 20px;
+  margin-top:0px;
 }

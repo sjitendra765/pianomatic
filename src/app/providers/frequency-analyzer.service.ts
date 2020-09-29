@@ -1,7 +1,7 @@
 import { Injectable , EventEmitter, OnInit} from '@angular/core';
 import { Observable, Subscription, from, observable } from 'rxjs';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx'
-declare var ml5:any
+
 @Injectable({
   providedIn: 'root'
 })
@@ -36,7 +36,6 @@ export class FrequencyAnalyzerService implements OnInit {
     
   }
   async startAnalysing(canvasCtx){
-    console.log("ml5 version", ml5.version)
     let getMicrophoneAuth
       try{      
         await this.diagnostic.requestMicrophoneAuthorization()

@@ -39,7 +39,7 @@
                 "input": "src/global.scss"
               }
             ],
-            "scripts": ["./node_modules/ml5/dist/ml5.js"
+            "scripts": [
             ]
           },
           "configurations": {

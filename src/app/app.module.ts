@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import {BluetoothService} from './providers/bluetooth.service'
+import {KeyboardService} from './providers/keyboard.service'
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -46,7 +47,8 @@ export function createTranslateLoader(http: HttpClient) {
     FrequencyAnalyzerService,
     OpenNativeSettings,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    BluetoothService
+    BluetoothService,
+    KeyboardService
   ],
   bootstrap: [AppComponent]
 })

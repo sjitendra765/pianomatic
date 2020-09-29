@@ -1,14 +1,5 @@
 <div class="popover_class">
-   <p>{{"KEEP_AS" | translate}}</p>
-  <div class="heading">
-    <div class="spanbox"></div><div class="newsetting" (click)="newSetting()">{{"NEW_TEMPERAMENT" | translate}}</div>
-  </div>
-  
-  <div *ngIf="show">
-    <input type="text" [(ngModel)] = 'name' />
-    <button (click)="save()">save</button>
-  </div>
-  <p>{{"CUSTOM_TEMPERAMENT" | translate}}</p>
+  <p>{{"CHOOSE_TEMPERAMENT" | translate}}</p>
   <ul class="listtemp">
     <li *ngFor="let k of list; index as i" (click)="selectSetting(k)"> {{k}}</li>
   </ul>

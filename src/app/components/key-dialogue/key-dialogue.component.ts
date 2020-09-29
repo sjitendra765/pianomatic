@@ -4,6 +4,7 @@ import { Globalization } from '@ionic-native/globalization/ngx';
 import {FrequencyAnalyzerService} from '../../providers/frequency-analyzer.service'
 import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import {Service} from '../../providers/dialogueBox.service'
+import {KeyboardService} from '../../providers/keyboard.service';
 @Component({
   selector: 'app-key-dialogue',
   templateUrl: './key-dialogue.component.html',
@@ -28,7 +29,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   drawVisual;
   prevIdx;
   audioContext = null
-  constructor(private diagnostic: Diagnostic,translate: TranslateService,private service:Service,private globalization: Globalization, private freq: FrequencyAnalyzerService){
+  constructor(private diagnostic: Diagnostic,translate: TranslateService,private service:Service, private keyboard:KeyboardService,private globalization: Globalization, private freq: FrequencyAnalyzerService){
     //translate.setDefaultLang('es');    
     this.translate = translate
   }
@@ -98,6 +99,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.displayFreq = await this.getNumVal(this.keyData.frequency) 
     this.displayThreshold = '+' + await this.getNumVal(this.threshold)
     this.newKeyData.emit(this.keyData);
+    this.keyboard.updateFrequency()
   }
   async decreaseFreq(){
     //this.keyData.frequency = this.keyData.frequency - (0.01* this.keyData.frequency)
@@ -109,6 +111,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.displayThreshold = '-' + await this.getNumVal(this.threshold)
     console.log(this.keyData)
     this.newKeyData.emit(this.keyData);
+    this.keyboard.updateFrequency()
   }
   
   async getNumVal(val){

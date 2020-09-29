@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import {KeyboardData} from '../static/keyboard-dataset';
 import {Keyboard} from '../models/piano-keyboard';
 
@@ -6,8 +6,16 @@ import {Keyboard} from '../models/piano-keyboard';
   providedIn: 'root'
 })
 export class KeyboardService {
-
+  changed: EventEmitter<boolean> = new EventEmitter();
   constructor() { }
+  
+  updateFrequency(){
+    this.changed.emit(true)
+    //this.rootViewContainer.instance.frequency = `223`;
+  }
+  getFrequencyEmitter() {
+    return this.changed;
+  }
   getFrequencies(): Keyboard[]{
     //get keyboard frequencies table
     return KeyboardData;

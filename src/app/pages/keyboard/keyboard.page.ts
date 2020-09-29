@@ -40,8 +40,13 @@ export class KeyboardPage implements OnInit {
         this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
         console.log('Width: ' + platform.width());
         console.log('Height: ' + platform.height());
-        this.HEIGHT = platform.width();
-        this.WIDTH = platform.height() -1;
+        if(platform.isLandscape()){
+          this.HEIGHT = platform.height()-1;
+          this.WIDTH = platform.width()
+        }else{
+          this.HEIGHT = platform.width();
+          this.WIDTH = platform.height() -1;
+        }
       });
       this.service = service
       this.store = storage

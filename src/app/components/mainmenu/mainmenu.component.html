@@ -1,18 +1,23 @@
 <div class="inmenu">
-  <div>
-  <h3 class="h3"><b>{{"CURRENT_TEMPERAMENT" | translate}}</b></h3>
+  <div *ngIf="show" class="saveitem">
+    <ion-item class=" closed demo" >
+      <ion-label color="white" position="floating">{{"ENTER_NAME" | translate}}</ion-label>
+      <ion-input color="white" maxlength="20" placeholder-color="white" [(ngModel)] = 'name'></ion-input>
+    </ion-item>
+    <button item-right class="demo saveButton" (click)="save()">{{"SAVE" | translate}}</button>
+    
   </div>
-  <div>
-    <span>
-      <h3 class="standard h3">{{"STANDARD" | translate}}</h3>
-    </span>
-    <ion-icon (click)="openTemperament()" class="arrowbut" name="arrow-forward"></ion-icon>
+  <div class="temp">
+    <div class="savebox box" *ngIf="showSave">
+      <div>
+        <h3 (click)="openInput()">{{"SAVE_TEMPERAMENT" | translate}}</h3>
+      </div>
+    </div>
+    <div class="changebox box">
+      <h3 (click)="openTemperament()">{{"CHANGE_TEMPERAMENT" | translate}}</h3>
+    </div>
+    <p class="current"><b> {{"CURRENT_TEMPERAMENT" | translate}}</b></p>
+    <p class="current">{{currentTempo}}</p>
   </div>
-  <div class="savebox">
-    <h3 (click)="openInput()">{{"SAVE_CURRENT_TEMPERAMENT" | translate}}</h3>
-  </div>
-  <div *ngIf="show">
-    <input type="text" [(ngModel)] = 'name' />
-    <ion-button (click)="save()">{{"SAVE" | translate}}</ion-button>
-  </div>
+  
 </div>

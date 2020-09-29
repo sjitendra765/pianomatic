@@ -1,5 +1,7 @@
 import { Component, OnInit,NgZone   } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { ToastController } from '@ionic/angular';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-temperament',
@@ -11,7 +13,7 @@ export class TemperamentComponent implements OnInit {
   name:string;
   list:Array<any>= []
   store;
-  constructor(private storage: Storage,private zone: NgZone) {
+  constructor(private storage: Storage, private translate: TranslateService, public toastController: ToastController, private zone: NgZone) {
     this.store = storage
    }
    ngOnInit(){
@@ -31,11 +33,25 @@ export class TemperamentComponent implements OnInit {
 
   async selectSetting(k){
     await this.store.set('name',k)
+    this.presentToast(k + ' '+this.translate.instant( 'TEMPERAMENT_LOADED'),'primary')
     window.location.reload()
   }
   async newSetting(){
     await this.store.set('name','')
     window.location.reload()
+  }
+
+  async presentToast(message,color) {
+    let toast =await this.toastController.create({
+      message: message,
+      duration: 3000,
+      position: 'bottom',
+      color: color
+    });
+  
+    toast.onDidDismiss();
+  
+    toast.present();
   }
 
 }
