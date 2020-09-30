@@ -21,6 +21,10 @@ import {TemperamentComponent} from './components/temperament/temperament.compone
 import {FrequencyAnalyzerService} from './providers/frequency-analyzer.service'
 import { OpenNativeSettings } from '@ionic-native/open-native-settings/ngx';
 import { Globalization } from '@ionic-native/globalization/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { File } from '@ionic-native/file/ngx';
+import { FileChooser } from '@ionic-native/file-chooser/ngx';
+import { FilePath } from '@ionic-native/file-path/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 
 export function createTranslateLoader(http: HttpClient) {
@@ -38,6 +42,9 @@ export function createTranslateLoader(http: HttpClient) {
       }
     })],
   providers: [
+    File,
+    FileChooser,
+    FilePath,
     StatusBar,
     SplashScreen,
     BluetoothSerial,
@@ -46,6 +53,7 @@ export function createTranslateLoader(http: HttpClient) {
     Diagnostic,
     FrequencyAnalyzerService,
     OpenNativeSettings,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BluetoothService,
     KeyboardService

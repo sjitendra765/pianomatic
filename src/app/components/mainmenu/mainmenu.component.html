@@ -16,6 +16,8 @@
     <div class="changebox box">
       <h3 (click)="openTemperament()">{{"CHANGE_TEMPERAMENT" | translate}}</h3>
     </div>
+    <div><ion-button (click)="importSetting()"  color="dark">import</ion-button>
+        <ion-button (click)="exportSetting()"  color="dark">export</ion-button></div>
     <p class="current"><b> {{"CURRENT_TEMPERAMENT" | translate}}</b></p>
     <p class="current">{{currentTempo}}</p>
   </div>
