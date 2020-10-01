@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild,Inject,
   ViewContainerRef,  
   QueryList,
-  ViewChildren} from '@angular/core';
+  ViewChildren, OnDestroy} from '@angular/core';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 import {KeyboardData} from '../../static/keyboard-dataset';
 import {Keyboard} from '../../models/piano-keyboard';
@@ -16,7 +16,7 @@ import {BluetoothService} from '../../providers/bluetooth.service'
   templateUrl: './keyboard.page.html',
   styleUrls: ['./keyboard.page.scss'],
 })
-export class KeyboardPage implements OnInit {
+export class KeyboardPage implements OnInit , OnDestroy {
   keyboardData:any = KeyboardData;
   key:any;
   public WIDTH: number
@@ -55,6 +55,9 @@ export class KeyboardPage implements OnInit {
    // console.log(this.keyboardData[0].color)
    //this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.LANDSCAPE);
     
+  }
+  ngOnDestroy(){
+    console.log("on destroy called");
   }
   async ionViewWillEnter(){
 
@@ -108,7 +111,7 @@ export class KeyboardPage implements OnInit {
   }
     // set to landscape
   async onPianoKeyPress(event,idx){ //on pianoKey press
-     // this.service.updateComponent(idx)
+      this.service.updateComponent(idx)
      this.keyboardData[idx].color = this.keyboardData[idx].color+'Active'
      if(this.prevKey){        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
@@ -146,8 +149,10 @@ export class KeyboardPage implements OnInit {
   }
 
   ionViewDidLeave(){
+    console.log("jiyye")
     this.screenOrientation.unlock()
   }
+  
     // creating animation for dialogue box
   dialogueAnimation(el,fromWidth, toWidth, easing, fromOpacity, toOpacity, display){
         return createAnimation()

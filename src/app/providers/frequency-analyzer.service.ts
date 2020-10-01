@@ -1,4 +1,5 @@
 import { Injectable , EventEmitter, OnInit} from '@angular/core';
+import {Platform} from '@ionic/angular'
 import { Observable, Subscription, from, observable } from 'rxjs';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx'
 
@@ -22,15 +23,20 @@ export class FrequencyAnalyzerService implements OnInit {
   drawVisual = null
   private reader: Observable<any>;
   frequency: EventEmitter<any> = new EventEmitter();
-  constructor( private diagnostic: Diagnostic) { 
-    this.audioContext = new window.AudioContext();
-    this.analyser = this.audioContext.createAnalyser();
-    this.distortion = this.audioContext.createWaveShaper();
-    this.gainNode = this.audioContext.createGain();
-    navigator.mediaDevices.getUserMedia(
-      {audio: true})
-      .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
-      .catch(err => console.log(err))
+  constructor( private diagnostic: Diagnostic,platform:Platform) { 
+    platform.ready().then(() => {
+      this.audioContext = new window.AudioContext();
+      this.analyser = this.audioContext.createAnalyser();
+      this.distortion = this.audioContext.createWaveShaper();
+      this.gainNode = this.audioContext.createGain();
+      navigator.mediaDevices.getUserMedia(
+        {audio: true})
+        .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
+        .catch(err => console.log(err))
+      })
+      platform.pause.subscribe(async () => {
+        this.audioContext.close()
+      });
   }
   ngOnInit(){
     
