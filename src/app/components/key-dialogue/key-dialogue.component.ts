@@ -16,22 +16,13 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   
   @Output() newKeyData = new EventEmitter<any>();
   threshold;
-  imgSrc = "../assets/freq.png";
-  translate;
   displayFreq;
   displayThreshold;
   PianoFreq;
-  analyser;
-  gainNode;
-  distortion;
   canvasCtx;
-  recordId;
-  drawVisual;
   prevIdx;
-  audioContext = null
-  constructor(private diagnostic: Diagnostic,translate: TranslateService,private service:Service, private keyboard:KeyboardService,private globalization: Globalization, private freq: FrequencyAnalyzerService){
+  constructor(private diagnostic: Diagnostic,private translate: TranslateService,private service:Service, private keyboard:KeyboardService,private globalization: Globalization, private freq: FrequencyAnalyzerService){
     //translate.setDefaultLang('es');    
-    this.translate = translate
   }
  async ngOnInit(){
     this.service.getIndexEmitter().subscribe(i=>{
@@ -40,15 +31,13 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed(2))
     this.displayFreq = await this.getNumVal(this.keyData.frequency)
     this.displayThreshold = '-' + await this.getNumVal(this.threshold)
-    this.audioContext = new window.AudioContext();
-    this.analyser = this.audioContext.createAnalyser();
-      this.distortion = this.audioContext.createWaveShaper();      
-      this.gainNode = this.audioContext.createGain();
+    this.keyboard.getTemperamentEmitter().subscribe(d=>{      
+      if(this.keyData.id == d[this.keyData.id -1].id){
+        this.keyData.frequency = d[this.keyData.id -1].frequency
+        this.displayFreq = d[this.keyData.id -1].frequency
+      }
       
-      navigator.mediaDevices.getUserMedia(
-        {audio: true})
-        .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
-        .catch(err => console.log(err))
+    })
   }
   ionViewWillEnter(){
 
@@ -99,7 +88,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.displayFreq = await this.getNumVal(this.keyData.frequency) 
     this.displayThreshold = '+' + await this.getNumVal(this.threshold)
     this.newKeyData.emit(this.keyData);
-    this.keyboard.updateFrequency()
+    this.keyboard.frequencyUpdated()
   }
   async decreaseFreq(){
     //this.keyData.frequency = this.keyData.frequency - (0.01* this.keyData.frequency)
@@ -111,7 +100,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     this.displayThreshold = '-' + await this.getNumVal(this.threshold)
     console.log(this.keyData)
     this.newKeyData.emit(this.keyData);
-    this.keyboard.updateFrequency()
+    this.keyboard.frequencyUpdated()
   }
   
   async getNumVal(val){

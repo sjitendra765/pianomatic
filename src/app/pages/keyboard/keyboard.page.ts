@@ -108,7 +108,7 @@ export class KeyboardPage implements OnInit {
   }
     // set to landscape
   async onPianoKeyPress(event,idx){ //on pianoKey press
-      this.service.updateComponent(idx)
+     // this.service.updateComponent(idx)
      this.keyboardData[idx].color = this.keyboardData[idx].color+'Active'
      if(this.prevKey){        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)

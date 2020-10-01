@@ -22,7 +22,7 @@ export class MainmenuComponent implements OnInit {
   showSave:boolean= false;
   store;
   name:string;
-  currentTempo;
+  currentTempo: string = '';
   constructor( private file: File,private fileChooser: FileChooser,private filePath: FilePath, private popoverController: PopoverController ,private socialSharing: SocialSharing, private translate: TranslateService,private keyboard: KeyboardService, public toastController: ToastController, private storage: Storage,) {
     this.store = storage
    }
@@ -31,12 +31,18 @@ export class MainmenuComponent implements OnInit {
     this.keyboard.getFrequencyEmitter().subscribe(r=>{
       this.changed = r;
     })
+    this.keyboard.getNameEmitter().subscribe(n=>{
+      this.currentTempo = n
+    })
     this.currentTempo = await this.store.get('name')
     
   }
+  ionViewWillEnter(){
+
+  }
   writeJSON(filename, object) {
     return this.file.writeFile(this.file.externalRootDirectory, filename, JSON.stringify(object), {replace:true})
-    }
+  }
   
   async openTemperament(ev){
     this.showSave = false;
@@ -47,7 +53,8 @@ export class MainmenuComponent implements OnInit {
     }
     this.show = false;
     this.changed = false;
-    this.currentTempo = this.currentTempo.replace(/\*\s*$/, "");
+    if(this.currentTempo)
+      this.currentTempo = this.currentTempo.replace(/\*\s*$/, "");
     const popover = await this.popoverController.create({
       component: TemperamentComponent,
       event: ev,
@@ -62,7 +69,8 @@ export class MainmenuComponent implements OnInit {
     this.show  = false;
     this.showSave = false;
     this.changed = false;
-    this.currentTempo = this.currentTempo.replace(/\*\s*$/, "");
+    if(this.currentTempo)
+      this.currentTempo = this.currentTempo.replace(/\*\s*$/, "");
     this.store.get('default').then(val=>{
       this.store.set(this.name,val)
       this.store.remove('default')
@@ -88,8 +96,11 @@ export class MainmenuComponent implements OnInit {
         console.log(data)
         await this.store.set(filename.split('.')[0],data)
         await this.store.set('name', filename.split('.')[0])
+        this.keyboard.nameUpdated(filename.split('.')[0]);
+        this.keyboard.loadTemperament(data)
+        //window.location.reload();
         await this.presentToast(this.translate.instant('IMPORT_TEMPERAMENT'),"primary");
-        window.location.reload();
+        
       })
       .catch(err => console.log(err));
    
@@ -106,17 +117,13 @@ export class MainmenuComponent implements OnInit {
       subject: 'painomatic exports file', // fi. for email
       files: [filepath], // an array of filenames either locally or remotely
     };
-    this.socialSharing.canShareViaEmail().then(() => {
-      this.socialSharing.shareWithOptions(options).then((r) => {
-        console.log(r)
-      }).catch((err) => {
-        // Error!
-        console.log(err)
-      });
+    this.socialSharing.shareWithOptions(options).then((r) => {
+      console.log(r)
+      this.file.removeFile(this.file.externalRootDirectory, this.currentTempo+'.json');
     }).catch((err) => {
-      // Sharing via email is not possible
-      console.log(err)
-    });
+        // Error!
+       console.log(err)
+     });
   }
   async presentToast(message,color) {
     let toast =await this.toastController.create({
@@ -126,7 +133,6 @@ export class MainmenuComponent implements OnInit {
       color: color
     });
   
-    toast.onDidDismiss();
   
     toast.present();
   }

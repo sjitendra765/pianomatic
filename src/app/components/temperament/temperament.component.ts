@@ -1,7 +1,8 @@
 import { Component, OnInit,NgZone   } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { ToastController } from '@ionic/angular';
+import { ToastController,PopoverController } from '@ionic/angular';
 import { TranslateService } from '@ngx-translate/core';
+import {KeyboardService} from '../../providers/keyboard.service'
 
 @Component({
   selector: 'app-temperament',
@@ -13,7 +14,7 @@ export class TemperamentComponent implements OnInit {
   name:string;
   list:Array<any>= []
   store;
-  constructor(private storage: Storage, private translate: TranslateService, public toastController: ToastController, private zone: NgZone) {
+  constructor(private storage: Storage,private keyboard: KeyboardService,public popoverController: PopoverController, private translate: TranslateService, public toastController: ToastController, private zone: NgZone) {
     this.store = storage
    }
    ngOnInit(){
@@ -33,12 +34,20 @@ export class TemperamentComponent implements OnInit {
 
   async selectSetting(k){
     await this.store.set('name',k)
+    this.keyboard.nameUpdated(k);
+    var data = await this.store.get(k)
+    this.keyboard.loadTemperament(data)
     this.presentToast(k + ' '+this.translate.instant( 'TEMPERAMENT_LOADED'),'primary')
-    window.location.reload()
+    this.popoverController.dismiss();
+   // window.location.reload()
   }
   async newSetting(){
     await this.store.set('name','')
-    window.location.reload()
+    this.keyboard.nameUpdated('')
+    var data = await this.store.get('default')
+    this.keyboard.loadTemperament(data)
+    this.popoverController.dismiss();
+    //window.location.reload()
   }
 
   async presentToast(message,color) {
@@ -47,10 +56,7 @@ export class TemperamentComponent implements OnInit {
       duration: 3000,
       position: 'bottom',
       color: color
-    });
-  
-    toast.onDidDismiss();
-  
+    });  
     toast.present();
   }
 
