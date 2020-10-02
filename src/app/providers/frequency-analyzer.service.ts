@@ -2,6 +2,7 @@ import { Injectable , EventEmitter, OnInit} from '@angular/core';
 import {Platform} from '@ionic/angular'
 import { Observable, Subscription, from, observable } from 'rxjs';
 import { Diagnostic } from '@ionic-native/diagnostic/ngx'
+import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,7 @@ export class FrequencyAnalyzerService implements OnInit {
   drawVisual = null
   private reader: Observable<any>;
   frequency: EventEmitter<any> = new EventEmitter();
-  constructor( private diagnostic: Diagnostic,platform:Platform) { 
+  constructor( private diagnostic: Diagnostic,platform:Platform, private androidPermissions: AndroidPermissions) { 
      this.audioContext = new window.AudioContext();
      this.analyser = this.audioContext.createAnalyser();
      this.distortion = this.audioContext.createWaveShaper();
@@ -51,12 +52,13 @@ export class FrequencyAnalyzerService implements OnInit {
   async startAnalysing(canvasCtx){
     let getMicrophoneAuth
       try{      
-        await this.diagnostic.requestMicrophoneAuthorization()
-        getMicrophoneAuth =await this.diagnostic.isMicrophoneAuthorized();
+        await this.androidPermissions.requestPermissions([this.androidPermissions.PERMISSION.RECORD_AUDIO, this.androidPermissions.PERMISSION.MODIFY_AUDIO_SETTINGS]);
+        getMicrophoneAuth =await this.androidPermissions.checkPermission(this.androidPermissions.PERMISSION.MODIFY_AUDIO_SETTINGS);
+        console.log("get into ",getMicrophoneAuth)
       }catch(err){
         getMicrophoneAuth = true
       }
-      if( getMicrophoneAuth){
+      if( getMicrophoneAuth.hasPermission){
         this.analyser.connect(this.gainNode).connect(this.audioContext.destination) 
         this.gainNode.gain.value = 0
         const dataArray = new Float32Array(this.analyser.frequencyBinCount);
