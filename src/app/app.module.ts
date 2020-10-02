@@ -26,7 +26,6 @@ import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { IonicStorageModule } from '@ionic/storage';
-import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, '../assets/i18n/', '.json');
@@ -57,8 +56,7 @@ export function createTranslateLoader(http: HttpClient) {
     SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     BluetoothService,
-    KeyboardService,
-    AndroidPermissions
+    KeyboardService
   ],
   bootstrap: [AppComponent]
 })
