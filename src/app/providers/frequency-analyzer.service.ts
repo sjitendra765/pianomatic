@@ -24,19 +24,23 @@ export class FrequencyAnalyzerService implements OnInit {
   private reader: Observable<any>;
   frequency: EventEmitter<any> = new EventEmitter();
   constructor( private diagnostic: Diagnostic,platform:Platform) { 
-    platform.ready().then(() => {
-      this.audioContext = new window.AudioContext();
-      this.analyser = this.audioContext.createAnalyser();
-      this.distortion = this.audioContext.createWaveShaper();
-      this.gainNode = this.audioContext.createGain();
+     this.audioContext = new window.AudioContext();
+     this.analyser = this.audioContext.createAnalyser();
+     this.distortion = this.audioContext.createWaveShaper();
+     this.gainNode = this.audioContext.createGain();
+     
+      platform.pause.subscribe(async () => {
+       this.audioContext.suspend().then(r=>{
+         console.log("paused", this.audioContext.state )
+       })
+     });
+     platform.resume.subscribe(async () => {
+      await this.audioContext.resume()
       navigator.mediaDevices.getUserMedia(
         {audio: true})
         .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
         .catch(err => console.log(err))
-      })
-      platform.pause.subscribe(async () => {
-        this.audioContext.close()
-      });
+     });
   }
   ngOnInit(){
     
@@ -95,7 +99,7 @@ export class FrequencyAnalyzerService implements OnInit {
     let drawAlt = function() {
       _this.drawVisual = requestAnimationFrame(drawAlt);
 
-        _this.analyser.getByteFrequencyData(dataArrayAlt);
+        _this.analyser.getByteTimeDomainData(dataArrayAlt);
         canvasCtx.fillStyle = 'rgb(0, 0, 0)';
         canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
