@@ -28,7 +28,10 @@ export class FrequencyAnalyzerService implements OnInit {
      this.analyser = this.audioContext.createAnalyser();
      this.distortion = this.audioContext.createWaveShaper();
      this.gainNode = this.audioContext.createGain();
-     
+     navigator.mediaDevices.getUserMedia(
+      {audio: true})
+      .then(stream => this.audioContext.createMediaStreamSource(stream).connect(this.distortion).connect(this.analyser))
+      .catch(err => console.log(err))
       platform.pause.subscribe(async () => {
        this.audioContext.suspend().then(r=>{
          console.log("paused", this.audioContext.state )
