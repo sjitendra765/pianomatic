@@ -46,8 +46,6 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     console.log(change)
   }
   async startRecording(i){
-    let canvas = <HTMLCanvasElement> document.querySelector('.visualizer'+this.keyData.id);
-    this.canvasCtx = canvas.getContext("2d");
     /*
       this.freq.startAnalysing()
       this.freq.histogram(this.canvasCtx)
@@ -61,7 +59,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
         this.freq.stopAnalysing()
       }  
       else{
-        this.freq.startAnalysing(this.canvasCtx);
+        this.freq.startAnalysing();
         this.freq.getFrequencyEmmitter().subscribe(r=>{
           console.log(r)
           this.PianoFreq = r.toFixed(2)

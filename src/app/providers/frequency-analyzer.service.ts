@@ -48,7 +48,7 @@ export class FrequencyAnalyzerService implements OnInit {
   ngOnInit(){
     
   }
-  async startAnalysing(canvasCtx){
+  async startAnalysing(){
     let getMicrophoneAuth
       try{      
         await this.diagnostic.requestMicrophoneAuthorization()
@@ -63,7 +63,7 @@ export class FrequencyAnalyzerService implements OnInit {
         const _this = this
         let ac
          // return new Observable(observer => {
-        this.histogram(canvasCtx)
+        //this.histogram(canvasCtx)
         let getFreqeuncy =  function(){
           _this.recordId = requestAnimationFrame(getFreqeuncy)
           _this.analyser.fftSize = 2048;

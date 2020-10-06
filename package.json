@@ -98,13 +98,13 @@
       "cordova-plugin-bluetooth-serial": {},
       "cordova-plugin-screen-orientation": {},
       "cordova.plugins.diagnostic": {},
-      "cordova-plugin-globalization": {},
       "cordova-sqlite-storage": {},
       "cordova-open-native-settings": {},
       "cordova-plugin-x-socialsharing": {},
       "cordova-plugin-file": {},
       "cordova-plugin-filechooser": {},
-      "cordova-plugin-filepath": {}
+      "cordova-plugin-filepath": {},
+      "cordova-plugin-globalization": {}
     },
     "platforms": [
       "android"

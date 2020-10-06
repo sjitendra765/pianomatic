@@ -116,10 +116,11 @@ export class KeyboardPage implements OnInit , OnDestroy {
      if(this.prevKey){        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
         let prevDialogue = this.prevKey.nextSibling
-        let animation = this.dialogueAnimation(prevDialogue, 300, 0, 'ease-out',0,0, "none")
+        let animation = this.dialogueAnimation(prevDialogue, 1, 0, 'ease-out',1,0, "none")
         // creating reverse animation to closes the dialogue when key released
-        animation.play();
+        await animation.play();
        /* this.service.removeComponent() */
+       prevDialogue.style.display = 'none';
         if(idx == this.prevIdx)
         {
           this.prevIdx = undefined
@@ -136,9 +137,9 @@ export class KeyboardPage implements OnInit , OnDestroy {
       this.service.addDynamicComponent()*/      
       // creating animation to open the dialogue when key pressed
      
-      let animation = this.dialogueAnimation(dialogue, 0, 300, 'ease-in', 0,1, 'block')
-      animation.play();
+      let animation = this.dialogueAnimation(dialogue, 0, 1, 'ease-in', 0,1, 'block')
       dialogue.style.display = 'block';
+      animation.play()
       // scroll screen to the center
       dialogue.scrollIntoView({
         behavior: "smooth",
@@ -149,22 +150,21 @@ export class KeyboardPage implements OnInit , OnDestroy {
   }
 
   ionViewDidLeave(){
-    console.log("jiyye")
     this.screenOrientation.unlock()
   }
   
     // creating animation for dialogue box
-  dialogueAnimation(el,fromWidth, toWidth, easing, fromOpacity, toOpacity, display){
+  dialogueAnimation(el,fromScale, toScale, easing, fromOpacity, toOpacity, display){
         return createAnimation()
         //.beforeStyles({ 'opacity': fromOpacity })
         .addElement(el)
         //.easing(easing)
         .duration(1000)
         //.direction("alternate")
-        .fromTo('width', fromWidth+'px', toWidth+'px')
+        //.fromTo('width', fromWidth+'px', toWidth+'px')
         .fromTo('opacity', fromOpacity, toOpacity)
        // .afterStyles({ 'opacity': toOpacity })
-        //.fromTo('transform','scale('+fromScale+')','scale('+toScale+')')
+        .fromTo('transform','scaleX('+fromScale+')','scaleX('+toScale+')')
         /*.keyframes([
           { offset: 0, opacity: fromOpacity },
           {offset: 0.9, opacity: fromOpacity},
