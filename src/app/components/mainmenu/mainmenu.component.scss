@@ -1,7 +1,9 @@
 .inmenu{
     height: 100%;
-    background-color: black;
+    background-color: #3b3b3b;
     position: relative;
+    border: 2px solid #FFC400;
+    color: #FFC400;
 }
 ion-icon{
     //font-size: 50px;
@@ -9,44 +11,95 @@ ion-icon{
     margin: 0;
     color: red;
 }
-.current{
-    color: white;
+*:focus {
+    outline: none;
 }
-.saveitem{
-    top:10px;
+.input{
+    width: 100% !important;
+  padding: 5px 10px;
+  margin: 8px 0;
+  display: inline-block;
+  border-bottom: 2px solid #FFC400;
+  background-color: #3b3b3b;
+  border-radius: 4px;
+}
+.buttomBut{
+    margin-bottom: 10px;
+}
+.buttomBut ion-button {
+    border: 2px solid #FFC400;
+    --color:  #FFC400;
+    --background: #3b3b3b;
+    margin-right: 10px;
+    border-radius: 5px;
+    width: 130px;
+    height: 35px;
+    font-size: 20px;
+}
+.saveButton{
+    position: relative;
+    right: 0;
+    //float: right;
+    color: #FFC400;
+    background-color: #3b3b3b;
+    border: 2px solid #FFC400;
+    height: 50px;
+    margin-right: 10px;
+    margin-top: 40px;
+    width: 100px;
+    height: 35px !important;
+    border-radius: 5px;
+    font-size: 20px;
+}
+.currentTemp{
+    width: 200px;
+    text-align: left !important;    
+    margin-top: 20px;
+  }
+  .current{
+      margin: 0;
+  }
+  .buttomBut{
     position: absolute;
-    margin: 20px;
+    right:    0;
+    bottom:   0;
+  }
+.saveitem{
+   // top:10px;
+    position: absolute;
+    margin-left: 20px;
     display: flex;
+    font-size: 20px;
 }
 #background-content {
     background-color: green !important;
 }
-
-.demo{
+.toparea{
     flex:2 1 auto;
-    height: 50px;
+    height: 80px;
 }
 .standard {
     display: inline-block;
   //  background-color: black !important;
   }
   .closed {
-    caret-color: white;
-    --placeholder-color: white;
-    --color: white;
+    caret-color:#FFC400;
+    --placeholder-color: #FFC400;
+    --color:#FFC400;
     //--highlight-background: transparent;
-    --background: black;
+    --background:#3b3b3b;
+    margin-top: 10px;
   }
   .item-native{
-      background: black !important;
-      color: white;
+      background:#3b3b3b !important;
+      color:#FFC400;
   }
 .h3{
     margin-top:0px;
     padding-top: 20px;
     background-color: green;
     margin-bottom: 0px;
-    color: white;
+    color:#FFC400;
 }
 div {
     text-align: center;
@@ -64,7 +117,7 @@ div {
     
 }
 .box{    
-  background-color: rgb(255, 254, 254);
+  background-color: #FFC400;
   width: 250px;
   border: 5px solid #696B6D;
   //padding: 5px;

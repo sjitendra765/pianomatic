@@ -1,9 +1,19 @@
 <div class="dialogue">
-      <h3>{{"TUNING_KEY" | translate}} {{keyData.name}}</h3>
-      <ion-icon name="arrow-up-outline" (click)="increaseFreq()"></ion-icon>
-      <p>{{displayFreq}} <b>hz</b></p>      
-      <ion-icon name="arrow-down-outline" (click)="decreaseFreq()"></ion-icon>
-      <p>{{PianoFreq}} hz</p>
-      <canvas [ngClass]="'visualizer'+ keyData.id" width="200" height="50"></canvas> 
-      <h3>{{displayThreshold}} HZ</h3>
+      <div class="view1">
+            <div class="canvasV">
+                  <canvas [ngClass]="'vertical'+ keyData.id" ></canvas>
+            </div>
+            <div class="kayDetail">
+                  <h1 class="keyname">{{keyData.name}}</h1>
+                  <div>
+                        <p class="freq">{{displayFreq}} hz</p> 
+                        <span class="freq" >
+                              <p class="uparrow" (click)="increaseFreq()"></p><br>
+                              <p class="downarrow"  (click)="decreaseFreq()"></p>
+                        </span> 
+                  </div>
+
+            </div>      
+      </div>
+      <canvas [ngClass]="'canvas ' + 'visualizer'+ keyData.id" style="background: url('assets/img/ruler.jpg')" ></canvas>
 </div>

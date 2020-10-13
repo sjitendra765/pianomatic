@@ -1,25 +1,21 @@
 <div class="inmenu">
-  <div *ngIf="show" class="saveitem">
-    <ion-item class=" closed demo" >
-      <ion-label color="white" position="floating">{{"ENTER_NAME" | translate}}</ion-label>
-      <ion-input color="white" maxlength="20" placeholder-color="white" [(ngModel)] = 'name'></ion-input>
+  
+  <div  class="saveitem">
+    <div class="currentTemp toparea" *ngIf="!show">
+      <p class="current"><b> {{"CURRENT_TEMPERAMENT" | translate}}</b></p>
+      <p class="current">{{currentTempo}}</p>
+    </div>
+    <ion-item class=" closed toparea" *ngIf="show">
+      <ion-label color="white" position="stacked">{{"ENTER_NAME" | translate}}</ion-label>
+      <input class="input" color="white" background="yellow" maxlength="20" placeholder-color="white" placeholder="New Name" [(ngModel)] = 'name' />
     </ion-item>
-    <button item-right class="demo saveButton" (click)="save()">{{"SAVE" | translate}}</button>
+    <button *ngIf="showSave" item-right class="demo saveButton" (click)="save()">{{"SAVE" | translate}}</button>
     
   </div>
-  <div class="temp">
-    <div class="savebox box" *ngIf="showSave">
-      <div>
-        <h3 (click)="openInput()">{{"SAVE_TEMPERAMENT" | translate}}</h3>
+    <div class="buttomBut">
+      <ion-button (click)="exportSetting()" >{{"EXPORT" |translate}}</ion-button><br>
+        <ion-button (click)="importSetting()" >{{"IMPORT" |translate}}</ion-button><br>
+        <ion-button (click)="openTemperament()">{{"CHANGE" | translate}}</ion-button>
       </div>
-    </div>
-    <div class="changebox box">
-      <h3 (click)="openTemperament()">{{"CHANGE_TEMPERAMENT" | translate}}</h3>
-    </div>
-    <div><ion-button (click)="importSetting()"  color="dark">import</ion-button>
-        <ion-button (click)="exportSetting()"  color="dark">export</ion-button></div>
-    <p class="current"><b> {{"CURRENT_TEMPERAMENT" | translate}}</b></p>
-    <p class="current">{{currentTempo}}</p>
-  </div>
   
 </div>

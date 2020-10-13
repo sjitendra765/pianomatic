@@ -4,11 +4,66 @@
  // height: 500px;
   display: block;
   margin: auto;
-  background-color: rgb(12, 88, 5);
+  background-color:#3b3b3b;
+}
+.view1{
+  height: 65vh;
+  margin: 0;
+  padding: 0;
+}
+h1{
+  margin: 0 !important;
+}
+.uparrow{
+  line-height: 80%;
+  margin-top: 0;
+  width: 0;
+	height: 0;
+	
+	border-right: 20px solid  transparent; 
+	border-left: 20px solid  transparent; 
+
+	border-bottom: 30px solid #FFC400;
+}
+.freq{
+  flex:3 1 auto;
+}
+.downarrow{
+  margin-top: 5px !important;
+  width: 0;
+	height: 0;
+	
+	border-top: 30px solid #FFC400;  //Coloured border
+	border-right: 20px solid transparent ; 
+	border-left: 20px solid  transparent;
+}
+.canvasV{
+  float: left;
+}
+.kayDetail div{
+  //float: right;
+  font-size: 50px; margin:0; height:80px;
+}
+.kayDetail div p {
+  font-size: 55px;float: left;margin-top: 20px;
+}
+.kayDetail div span {
+  margin: 0px;
+  margin-right: 5px;
+}
+.canvas{
+  
+  margin: 0;
+  clear: both;
+ // margin-top: 30px;
+  position: relative;
+}
+.keyname{
+  font-size: 110px;
 }
 ion-icon{
-  font-size: 50px;
-  color: red;
+  font-size: 40px;
+  color:#FFC400;
   &:active {
    // box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, (-5px) 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
     color: rgb(151, 79, 79)

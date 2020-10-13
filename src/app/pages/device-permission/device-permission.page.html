@@ -1,9 +1,12 @@
 
   <div id="container">
-    <p class="text">{{ 'PERMISSION_MESSAGE' | translate}}</p>
-    <ion-content>
-      <ion-button expand="full" color="secondary" (click)="askForPermission()">{{ "PROCEED" | translate }}</ion-button> 
-      <ion-button expand="full" color="secondary" (click)="openBluetoothSetting()">{{ "GO_TO_BLUETOOTH" | translate }}</ion-button>
-    </ion-content>
-
+    <ion-icon class="closeButton"  name="close" (click)="close()"></ion-icon>
+    <div class="perm1">
+    <p class="text">{{ 'PERMISSION_MESSAGE1' | translate}} <br> {{ 'PERMISSION_MESSAGE2' | translate}} </p>
+      <button   (click)="openBluetoothSetting()">{{ "GO_TO_BLUETOOTH" | translate }}</button> <br>
+      <button   (click)="askForPermission()">{{ "BUY_AT_STORE" | translate }}</button> 
+  </div>
+  <div class="perm2">
+    <img src="assets/img/pianomatic.png" width="50%" alt="">
+  </div>
   </div>

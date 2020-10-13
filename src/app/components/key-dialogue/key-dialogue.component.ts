@@ -29,15 +29,16 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
       this.startRecording(i)
     })
     this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed(2))
-    this.displayFreq = await this.getNumVal(this.keyData.frequency)
+    this.displayFreq = await this.getNumVal((parseInt(this.keyData.frequency)).toFixed())
     this.displayThreshold = '-' + await this.getNumVal(this.threshold)
     this.keyboard.getTemperamentEmitter().subscribe(d=>{      
       if(this.keyData.id == d[this.keyData.id -1].id){
-        this.keyData.frequency = d[this.keyData.id -1].frequency
-        this.displayFreq = d[this.keyData.id -1].frequency
+        this.keyData.frequency = parseFloat(d[this.keyData.id -1].frequency.toFixed())
+        this.displayFreq = parseFloat(d[this.keyData.id -1].frequency.toFixed())
       }
       
     })
+
   }
   ionViewWillEnter(){
 
@@ -46,6 +47,66 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
     console.log(change)
   }
   async startRecording(i){
+    // Vertical Canvas Begins
+    let canvasV = <HTMLCanvasElement> document.querySelector('.vertical'+this.keyData.id);
+    let ctxV = canvasV.getContext("2d");
+    canvasV.width = 50;
+    canvasV.height = 220
+   // ctxV.fillStyle = "black";
+    //ctxV.fillRect(0, 0, canvasV.width, canvasV.height);
+    ctxV.lineWidth = 8;
+    //ctxV.beginPath();
+    //ctxV.moveTo(25, 220);
+    //ctxV.lineTo(25, 150);
+    var path2 = new Path2D();
+    path2.moveTo(25, 220);
+    path2.lineTo(25, 150);
+    ctxV.lineCap = "round";
+    
+    ctxV.strokeStyle = "#FFC400"
+    ctxV.fillStyle = "#FFC400";
+    ctxV.stroke(path2);
+    
+    ctxV.font = "12px display";
+    ctxV.fillText("0", 35, 220);
+    ctxV.fillText("27", 35, 180);
+    ctxV.fillText("39", 35, 125);
+    ctxV.fillText("45", 35, 40);
+    ctxV.stroke();
+    
+    // Vertical Canvas Ends
+
+    /*
+      Horizontal Canvas begins
+    */
+    let canvas = <HTMLCanvasElement> document.querySelector('.visualizer'+this.keyData.id);
+    let ctx = canvas.getContext("2d");
+    
+    canvas.width = 270;
+    canvas.height = 68;
+    ctx.strokeStyle = "red"
+    
+    ctx.lineWidth = 15;
+    ctx.beginPath();
+    ctx.moveTo(138, 28);
+    ctx.lineTo(70, 28);
+    ctx.font = "15px display";
+    ctx.fillStyle = "#FFC400";
+    ctx.fillText("0", 135, 55);
+    ctx.fillText("-20", 65, 55);
+    ctx.fillText("-50", 5 , 55);
+    ctx.fillText("20", 182, 55);
+    ctx.fillText("50", 248, 55);
+    ctx.stroke();    
+    
+    var path1 = new Path2D();
+    path1.moveTo(70, 28);
+    path1.lineTo(70, 28);
+    ctx.lineCap = "round";
+    ctx.stroke(path1);
+    /* 
+      Horizontal Canvas Ends
+    */
     /*
       this.freq.startAnalysing()
       this.freq.histogram(this.canvasCtx)
@@ -77,12 +138,12 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   async increaseFreq(){   
   
     //this.keyData.frequency = this.keyData.frequency + (0.01* this.keyData.frequency)
-    this.keyData.frequency = this.keyData.frequency + 0.5
+    this.keyData.frequency = this.keyData.frequency + 1
     
     //this.freq = this.keyData.frequency.toLocaleString("es-ES",{minimumFractionDigits: 2})
     
-    this.keyData.frequency = parseFloat(this.keyData.frequency.toFixed(2))
-    this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed(2))
+    this.keyData.frequency = parseFloat(this.keyData.frequency.toFixed())
+    this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed())
     this.displayFreq = await this.getNumVal(this.keyData.frequency) 
     this.displayThreshold = '+' + await this.getNumVal(this.threshold)
     this.newKeyData.emit(this.keyData);
@@ -90,13 +151,12 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
   }
   async decreaseFreq(){
     //this.keyData.frequency = this.keyData.frequency - (0.01* this.keyData.frequency)
-    this.keyData.frequency = this.keyData.frequency - 0.5
+    this.keyData.frequency = this.keyData.frequency - 1
 
-    this.keyData.frequency = parseFloat(this.keyData.frequency.toFixed(2))
-    this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed(2))
+    this.keyData.frequency = parseFloat(this.keyData.frequency.toFixed())
+    this.threshold = parseFloat((0.01* this.keyData.frequency).toFixed())
     this.displayFreq = await this.getNumVal(this.keyData.frequency)
     this.displayThreshold = '-' + await this.getNumVal(this.threshold)
-    console.log(this.keyData)
     this.newKeyData.emit(this.keyData);
     this.keyboard.frequencyUpdated()
   }
@@ -107,7 +167,7 @@ export class KeyDialogueComponent implements OnInit, OnChanges {
       let lang = getVal.value;
       if(getVal.value.substring(0,2) == 'es')
       lang = "es-ES"
-      return val.toLocaleString( lang,{minimumFractionDigits: 2})
+      return val.toLocaleString( lang)
     }catch(err){
       return val
     }

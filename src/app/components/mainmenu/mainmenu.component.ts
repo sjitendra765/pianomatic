@@ -10,6 +10,7 @@ import { File } from '@ionic-native/file/ngx';
 import { FileChooser } from '@ionic-native/file-chooser/ngx';
 import { FilePath } from '@ionic-native/file-path/ngx';
 import { from } from 'rxjs';
+import { menuController } from "@ionic/core";
 
 @Component({
   selector: 'app-mainmenu',
@@ -66,6 +67,10 @@ export class MainmenuComponent implements OnInit {
     this.show = !this.show;
   }
   save(){
+    if(!this.show){
+      this.show = true;
+      return;
+    }
     this.show  = false;
     this.showSave = false;
     this.changed = false;
@@ -75,7 +80,8 @@ export class MainmenuComponent implements OnInit {
       this.store.set(this.name,val)
       this.store.remove('default')
     })
-    this.presentToast(this.name +' '+this.translate.instant('TEMPERAMENT_SAVED'),'primary')
+    this.presentToast(this.name +' '+this.translate.instant('TEMPERAMENT_SAVED'),'dark')
+    menuController.toggle()
     
    // window.location.reload()
   }
@@ -87,7 +93,7 @@ export class MainmenuComponent implements OnInit {
       .then(async filePath => {console.log("filepath",filePath)
         var filename = /[^/]*$/.exec(filePath)[0];
         if((filename.split('.')[1]).toUpperCase() != 'JSON'){
-          this.presentToast(this.translate.instant('IMPORT_ERROR'),"danger")
+          this.presentToast(this.translate.instant('IMPORT_ERROR'),"dark")
           return;
         }
         var path = filePath.slice(0,-(filename.length+1))
@@ -99,8 +105,8 @@ export class MainmenuComponent implements OnInit {
         this.keyboard.nameUpdated(filename.split('.')[0]);
         this.keyboard.loadTemperament(data)
         //window.location.reload();
-        await this.presentToast(this.translate.instant('IMPORT_TEMPERAMENT'),"primary");
-        
+        await this.presentToast(this.translate.instant('IMPORT_TEMPERAMENT'),"dark");
+        menuController.toggle()
       })
       .catch(err => console.log(err));
    
@@ -130,7 +136,7 @@ export class MainmenuComponent implements OnInit {
       message: message,
       duration: 3000,
       position: 'bottom',
-      color: color
+      cssClass: 'toast'
     });
   
   

@@ -1,6 +1,29 @@
 body {
+    font-family: "display"; 
     margin: 0;
     background: #222;
+  }
+  .ptoolbar {
+    --border-color: #FFC400;
+    --border-width: 2px;
+    --min-height: 30px;
+  }
+  
+  .dot {
+    height: 15px;
+    width: 15px;
+    
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .disconnected{
+    background-color: red;
+  }
+  .connected{
+    background-color: green;
+  }
+  .ionicon{
+    color: #FFC400;
   }
   ion-icons{
     height:50px;
@@ -11,7 +34,7 @@ body {
     z-index: 9999;
     bottom: 0;
     height: 50px;
-    color: green;
+    color: #FFC400;
   }
   .menu{
     position: fixed;
@@ -22,6 +45,7 @@ body {
   .links {
     max-width: 100%;
     overflow-x: scroll;
+    color: #FFC400;
   }
   .box{
     display: none;
@@ -45,7 +69,7 @@ body {
     width:100%;
     border: 1px solid #160801;
     border-radius: 0;
-    background-color: rgb(12, 88, 5);
+    background-color:#3b3b3b;
     //background: linear-gradient(to bottom right, rgba(35, 90, 60, 0.603), rgba(0, 0, 0, 0)), url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/187/vwood.png);
     box-shadow: 0 0 50px rgba(0, 0, 0, 0.5) inset, 0 1px rgba(212, 152, 125, 0.2) inset, 0 5px 15px rgba(0, 0, 0, 0.5);
   }
@@ -87,7 +111,7 @@ body {
     border-left: 1px solid #999;
     border-bottom: 1px solid #999;
     box-shadow: 2px 0 3px rgba(0, 0, 0, 0.1) inset, (-5px) 5px 20px rgba(0, 0, 0, 0.2) inset, 0 0 3px rgba(0, 0, 0, 0.2);
-    background: linear-gradient(to bottom, #fff 0%, #74d99c 100%)
+    background: linear-gradient(to bottom, #fff 0%, #FFC400 100%)
   }
   .blackActive{
     height: 10em;
@@ -99,9 +123,12 @@ body {
     border: 1px solid #000;
     border-radius: 0 0 3px 3px;
     box-shadow: (-1px) -1px 2px rgba(255, 255, 255, 0.2) inset, 0 -2px 2px 3px rgba(0, 0, 0, 0.6) inset, 0 1px 2px rgba(0, 0, 0, 0.5);
-    background: linear-gradient(to right, #444 0%, rgb(26, 73, 38) 100%);
+    background: linear-gradient(to right, #444 0%, #FFC400 100%);
   }
   
+  .list span{
+    font-size: 15px;
+  }
   .black {
     height: 10em;
     width: 2em;
@@ -122,6 +149,7 @@ body {
   
   .white {
     margin: 0 0 0 -1em;
+    color: black;
   }
   
   ul li {

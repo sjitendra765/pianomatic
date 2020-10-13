@@ -1,14 +1,20 @@
-<ion-content>
+<ion-content class="mainContent">
+  <ion-toolbar color="dark" class="ptoolbar">
+    <ion-buttons slot="start">
+      <ion-menu-button auto-hide="false" style="color: #FFC400;"></ion-menu-button>
+    </ion-buttons>
+    <ion-buttons slot="end" (click)="openInfo()">
+      <span [ngClass]="'dot '+ isConnected"></span> <span style="color: #FFC400;padding-left: 5px;padding-right: 5px;"> {{"STATUS" | translate}} - {{isConnected | uppercase | translate}}</span>
+    </ion-buttons>
+    
+  </ion-toolbar>
   <div class = "links">      
     <ul class="set" [style.width.px] = "width">
       <span *ngFor="let k of keyboardData; index as i">      
-      <li  [ngClass]="'list '+ k.color +' key'+i" [style.height.px]="(k.color.substring(0, 5) == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color.substring(0, 5) == keyboardData[i-1].color.substring(0, 5) )?0:-16" #list (click)="onPianoKeyPress($event.target,i)" ><br><br><br>{{k.name}}</li>     
+      <li  [ngClass]="'list '+ k.color +' key'+i" [style.height.px]="(k.color.substring(0, 5) == 'white')?HEIGHT:(HEIGHT*0.6)" [style.margin-left.px]="(i == 0 || k.color.substring(0, 5) == keyboardData[i-1].color.substring(0, 5) )?0:-16" #list (click)="onPianoKeyPress($event.target,i)" ><br><br><br> <span>{{k.name}}</span></li>     
       <li class="box" [style.height.px]="HEIGHT"><ng-template #dialogue ></ng-template></li>
     </span>
     </ul>
     
-  <ion-buttons slot="start" class="mainmenu">
-    <ion-menu-button></ion-menu-button>
-  </ion-buttons>    
   </div>
 </ion-content>

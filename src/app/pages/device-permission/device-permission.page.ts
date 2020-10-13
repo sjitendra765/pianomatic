@@ -94,6 +94,9 @@ export class DevicePermissionPage implements OnInit {
       }
             
   }
+  close(){
+    this.route.navigate(['/keyboard'])
+  }
   async presentToast(message,color) {
     let toast =await this.toastController.create({
       message: message,

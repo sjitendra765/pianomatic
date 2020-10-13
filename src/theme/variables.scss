@@ -3,6 +3,7 @@
 
 /** Ionic CSS Variables **/
 :root {
+  --ion-font-family: 'display';
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;
@@ -127,7 +128,7 @@
 
     --ion-color-dark: #f4f5f8;
     --ion-color-dark-rgb: 244,245,248;
-    --ion-color-dark-contrast: #000000;
+    --ion-color-dark-contrast: #3b3b3b;
     --ion-color-dark-contrast-rgb: 0,0,0;
     --ion-color-dark-shade: #d7d8da;
     --ion-color-dark-tint: #f5f6f9;
@@ -230,3 +231,81 @@
     --ion-card-background: #1e1e1e;
   }
 }
+
+@font-face {
+  font-family: 'display';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/display.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/OpenSans-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../assets/fonts/OpenSans-BoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/OpenSans-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../assets/fonts/OpenSans-ExtraBoldItalic.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: italic;
+  src: url('../assets/fonts/OpenSans-Italic.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../assets/fonts/OpenSans-LightItalic.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: bold;
+  src: url('../assets/fonts/OpenSans-Light.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: normal;
+  src: url('../assets/fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: normal;
+  font-weight: bold;
+  src: url('../assets/fonts/OpenSans-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'My Custom Font';
+  font-style: italic;
+  font-weight: normal;
+  src: url('../assets/fonts/OpenSans-SemiBoldItalic.ttf');
+}
+
