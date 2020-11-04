@@ -24,10 +24,10 @@ export class AppComponent {
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.hide();
-      this.statusBar.overlaysWebView(true);
-      this.splashScreen.hide();
+    this.platform.ready().then(async () => {
+      await this.statusBar.hide();
+      await this.statusBar.overlaysWebView(true);
+      await this.splashScreen.hide();
     });
   }
   async initTranslate() {

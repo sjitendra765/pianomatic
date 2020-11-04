@@ -17,6 +17,7 @@ import { Diagnostic } from '@ionic-native/diagnostic/ngx';
 import { environment } from '../../../environments/environment';
 
 
+
 @Component({
   selector: 'app-keyboard',
   templateUrl: './keyboard.page.html',
@@ -40,19 +41,21 @@ export class KeyboardPage implements OnInit , OnDestroy {
   dialogueWidth: number;
   store: any;
   constructor(
-     private Bluetooth: BluetoothService,private diagnostic: Diagnostic, platform:Platform, private route: Router,private translate: TranslateService ,private storage: Storage, public toastController: ToastController, private el: ElementRef, @Inject(Service) service, 
+     private Bluetooth: BluetoothService,
+     private diagnostic: Diagnostic,
+     platform:Platform, 
+     private route: Router,
+     private translate: TranslateService ,
+     private storage: Storage,
+     public toastController: ToastController,
+      private el: ElementRef, @Inject(Service) service, 
     @Inject(ViewContainerRef) viewContainerRef)
      { 
       platform.ready().then(() => {
         console.log('Width: ' + platform.width());
         console.log('Height: ' + platform.height());
-        if(platform.isLandscape()){
-          this.HEIGHT = platform.height()-50;
-          this.WIDTH = platform.width()
-        }else{
-          this.HEIGHT = platform.width();
-          this.WIDTH = platform.height() -50;
-        }
+        this.HEIGHT = platform.height()-50;
+        this.WIDTH = platform.width()
       });
       this.service = service
       this.store = storage
@@ -134,7 +137,7 @@ export class KeyboardPage implements OnInit , OnDestroy {
      if(this.prevKey){        
         this.keyboardData[this.prevIdx].color = this.keyboardData[this.prevIdx].color.substring(0,5)
         let prevDialogue = this.prevKey.nextSibling
-        let animation = this.dialogueAnimation(prevDialogue, 1, 0, 'ease-out',1,0, "none")
+        let animation = this.dialogueAnimation(prevDialogue, 1, 0, 'ease-out',1,0, 200)
         // creating reverse animation to closes the dialogue when key released
         await animation.play();
        /* this.service.removeComponent() */
@@ -155,7 +158,7 @@ export class KeyboardPage implements OnInit , OnDestroy {
       this.service.addDynamicComponent()*/      
       // creating animation to open the dialogue when key pressed
      
-      let animation = this.dialogueAnimation(dialogue, 0, 1, 'ease-in', 0,1, 'block')
+      let animation = this.dialogueAnimation(dialogue, 0, 1, 'ease-in', 0,1, 500)
       dialogue.style.display = 'block';
       animation.play()
       // scroll screen to the center
@@ -171,12 +174,12 @@ export class KeyboardPage implements OnInit , OnDestroy {
   }
   
     // creating animation for dialogue box
-  dialogueAnimation(el,fromScale, toScale, easing, fromOpacity, toOpacity, display){
+  dialogueAnimation(el,fromScale, toScale, easing, fromOpacity, toOpacity, timer){
         return createAnimation()
         //.beforeStyles({ 'opacity': fromOpacity })
         .addElement(el)
         //.easing(easing)
-        .duration(1000)
+        .duration(timer)
         //.direction("alternate")
         //.fromTo('width', fromWidth+'px', toWidth+'px')
         .fromTo('opacity', fromOpacity, toOpacity)
